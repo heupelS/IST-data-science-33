@@ -1,11 +1,5 @@
-import sys
-sys.path.append('../../utils')
-from load_data import load_diabetic_data
+from data_dimemsionality import data_dimemsionality
 
-import pandas as pd
-
-def profiling():
-    data = load_diabetic_data()
-
+# Summary of all profiling tasks
 if __name__ == "__main__":
-    profiling()
+    data_dimemsionality()
