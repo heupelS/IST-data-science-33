@@ -3,8 +3,8 @@
 import sys, os
 
 # dirty but works for now 
-#sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),'utils'))
-sys.path.append('IST-data-science-33/src/utils')
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),'utils'))
+
 from general_utils import get_plot_folder_path
 from load_data import load_diabetic_data, load_drought_data
 
