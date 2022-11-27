@@ -21,7 +21,7 @@ def plot(data):
     plt.figure(figsize=(4,2))
     values = {'nr records': data.shape[0], 'nr variables': data.shape[1]}
     bar_chart(list(values.keys()), list(values.values()), title='Nr of records vs nr variables')
-    plt.savefig(get_plot_folder_path())
+    plt.savefig('%s/%s'  % (get_plot_folder_path(), 'dimensionality')  )
     plt.show()
 
 if __name__ == "__main__":
