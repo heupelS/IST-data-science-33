@@ -10,13 +10,14 @@ from ds_charts import bar_chart
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def plot(data):
+def plot(data, name):
     plt.figure(figsize=(4,2))
     values = {'nr records': data.shape[0], 'nr variables': data.shape[1]}
     bar_chart(list(values.keys()), list(values.values()), title='Nr of records vs nr variables')
-    plt.savefig(  os.path.join(get_plot_folder_path(), 'dimensionality') )
+    plt.savefig(  os.path.join(get_plot_folder_path(), name) )
     plt.show()
 
 if __name__ == "__main__":
     data_diabetic, data_drought = read_data()
-    plot(data_diabetic)
+    plot(data_diabetic, 'diabetic_records_variables')
+    plot(data_drought, 'drought_records_variables')
