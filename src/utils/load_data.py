@@ -21,3 +21,6 @@ def load_drought_data():
 
     except Exception as e:
         print(e)
+
+def read_data():
+    return load_diabetic_data(), load_drought_data()
