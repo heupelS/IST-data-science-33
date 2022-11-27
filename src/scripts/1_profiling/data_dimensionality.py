@@ -8,14 +8,14 @@ from load_data import read_data
 
 from ds_charts import bar_chart
 import pandas as pd
-import matplotlib.pyplot as plt
+from matplotlib.pyplot import savefig, show, figure
 
 def plot(data, name):
-    plt.figure(figsize=(4,2))
+    figure(figsize=(4,2))
     values = {'nr records': data.shape[0], 'nr variables': data.shape[1]}
     bar_chart(list(values.keys()), list(values.values()), title='Nr of records vs nr variables')
-    plt.savefig(  os.path.join(get_plot_folder_path(), name) )
-    plt.show()
+    savefig(  os.path.join(get_plot_folder_path(), name) )
+    show()
 
 if __name__ == "__main__":
     data_diabetic, data_drought = read_data()
