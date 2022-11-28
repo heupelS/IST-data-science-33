@@ -6,7 +6,7 @@ sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from general_utils import get_plot_folder_path
 from load_data import read_data
 
-from ds_charts import get_variable_types, choose_grid, HEIGHT, multiple_bar_chart, multiple_line_chart
+from ds_charts import get_variable_types, choose_grid, HEIGHT, multiple_bar_chart, multiple_line_chart, bar_chart
 
 from numpy import log
 
@@ -186,13 +186,13 @@ if __name__ == "__main__":
 
     data_diabetic, data_drought = read_data()
 
-    plot_global(data_diabetic, 'dist_diabetic_global_box' )
+    """ plot_global(data_diabetic, 'dist_diabetic_global_box' )
     plot_numeric(data_diabetic, 'dist_diabetic_numeric_box' )
     plot_outliers(data_diabetic, 'dist_diabetic_outlier' )
     plot_numeric_hist(data_diabetic, 'dist_diabetic_numeric_hist' )
     plot_displot(data_diabetic, 'dist_diabetic_distplot' )
-    plot_bestfit(data_diabetic, 'dist_diabetic_bestfit' )
-    plot_symbolic_vals(data_diabetic, 'dist_diabetic_symbol_vals' )
+    plot_bestfit(data_diabetic, 'dist_diabetic_bestfit' ) 
+    plot_symbolic_vals(data_diabetic, 'dist_diabetic_symbol_vals' ) """
 
     print("diabetic finished")
 
