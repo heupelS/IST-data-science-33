@@ -2,30 +2,27 @@
 
 Final-Report: [Link](https://www.overleaf.com/1932411886vvfcqbrbrcfq)
 
-## Setup 
+## Setup
 
 From lecture its recommend to use python3.10!
 
-Run ```pip install -r requirements.txt``` to install dependencies
+Run `pip install -r requirements.txt` to install dependencies
 
 ## Ressources
 
 - Website with samples: [Link](http://web.ist.utl.pt/~claudia.antunes/DSLabs/)
 
-## Datasets 
+## Datasets
 
-### SET 1
+### SET 1: [Health](https://www.kaggle.com/datasets/brandao/diabetes)
 
-
-### SET 2
-
-
+### SET 2: [Climate](https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data)
 
 ## Don't rewrite fucntions, use modules
 
-For using modules, which can be imported in the task, please use the ```src/utils``` folder.
+For using modules, which can be imported in the task, please use the `src/utils` folder.
 
-Then we can include these files by the following commands on top of the python file: 
+Then we can include these files by the following commands on top of the python file:
 
 ```python
 import sys, os
