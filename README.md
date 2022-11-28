@@ -12,6 +12,15 @@ Run ```pip install -r requirements.txt``` to install dependencies
 
 - Website with samples: [Link](http://web.ist.utl.pt/~claudia.antunes/DSLabs/)
 
+## Datasets 
+
+### SET 1
+
+
+### SET 2
+
+
+
 ## Don't rewrite fucntions, use modules
 
 For using modules, which can be imported in the task, please use the ```src/utils``` folder.
