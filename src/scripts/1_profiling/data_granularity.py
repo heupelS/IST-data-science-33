@@ -4,9 +4,14 @@ import sys, os
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from general_utils import get_plot_folder_path
 from load_data import read_data
-
+import pandas as pd
 from ds_charts import get_variable_types, choose_grid, HEIGHT
 from matplotlib.pyplot import subplots, savefig, show
+
+###########################################
+## Select if plots show up of just saved ##
+SHOW_PLOTS = False
+###########################################
 
 def data_granularity(data, name, var_type):
 
@@ -25,17 +30,23 @@ def data_granularity(data, name, var_type):
         axs[i, j].hist(data[variables[n]].values, bins=100)
         i, j = (i + 1, 0) if (n+1) % cols == 0 else (i, j + 1)
 
-    savefig( os.path.join(get_plot_folder_path(), '{name}_{var_type}') )
-    show()
+    savefig( os.path.join(get_plot_folder_path(), f'{name}_{var_type}') )
+
+    if SHOW_PLOTS:
+        show()
 
 if __name__ == "__main__":
     data_diabetic, data_drought = read_data()
 
+    # convert date into pandas datetime64, need that for last plot
+    data_drought['date'] = pd.to_datetime(data_drought['date'])
+
     data_granularity(data_diabetic, 'gran_diabetic', 'Numeric')
-    data_granularity(data_drought, 'data_drought', 'Numeric')
+    data_granularity(data_drought, 'gran_drought', 'Numeric')
 
     data_granularity(data_diabetic, 'gran_diabetic', 'Symbolic')
-    data_granularity(data_drought, 'data_drought', 'Symbolic')
+    data_granularity(data_drought, 'gran_drought', 'Symbolic')
 
-    data_granularity(data_diabetic, 'gran_diabetic', 'Date')
-    data_granularity(data_drought, 'data_drought', 'Date')
+    # No date variables in diabetic
+    #data_granularity(data_diabetic, 'gran_diabetic', 'Date')
+    data_granularity(data_drought, 'gran_drought', 'Date')
