@@ -37,5 +37,5 @@ if __name__ == "__main__":
     data_granularity(data_diabetic, 'gran_diabetic', 'Symbolic')
     data_granularity(data_drought, 'data_drought', 'Symbolic')
 
-    data_granularity(data_diabetic, 'gran_diabetic', 'Numeric')
-    data_granularity(data_drought, 'data_drought', 'Numeric')
+    data_granularity(data_diabetic, 'gran_diabetic', 'Date')
+    data_granularity(data_drought, 'data_drought', 'Date')
