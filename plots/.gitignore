@@ -2,3 +2,4 @@
 *.pgf
 
 !FINAL/*.png
+!FINAL/1_profiling/*.png
