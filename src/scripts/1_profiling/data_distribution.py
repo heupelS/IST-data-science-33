@@ -185,22 +185,25 @@ def plot_symbolic_vals(data, name):
 if __name__ == "__main__":
 
     data_diabetic, data_drought = read_data()
-
-    """ plot_global(data_diabetic, 'dist_diabetic_global_box' )
+    plot_global(data_diabetic, 'dist_diabetic_global_box' )
     plot_numeric(data_diabetic, 'dist_diabetic_numeric_box' )
     plot_outliers(data_diabetic, 'dist_diabetic_outlier' )
     plot_numeric_hist(data_diabetic, 'dist_diabetic_numeric_hist' )
     plot_displot(data_diabetic, 'dist_diabetic_distplot' )
+
+    data_diabetic = data_diabetic.sample(n = 10000)
     plot_bestfit(data_diabetic, 'dist_diabetic_bestfit' ) 
-    plot_symbolic_vals(data_diabetic, 'dist_diabetic_symbol_vals' ) """
+    plot_symbolic_vals(data_diabetic, 'dist_diabetic_symbol_vals' )
 
     print("diabetic finished")
 
-    # plot_global(data_drought, 'dist_drought_global_box' ) #to do
-    """ plot_numeric(data_drought, 'dist_drought_numeric_box' )
+    #plot_global(data_drought, 'dist_drought_global_box' ) #to do
+    plot_numeric(data_drought, 'dist_drought_numeric_box' )
     plot_outliers(data_drought, 'dist_drought_outlier' )
     plot_numeric_hist(data_drought, 'dist_drought_numeric_hist' )
-    plot_displot(data_drought, 'dist_drought_distplot' ) """
+    plot_displot(data_drought, 'dist_drought_distplot' )
+    
+    data_drought = data_drought.sample(n = 10000)
     plot_bestfit(data_drought, 'dist_drought_bestfit' )
     plot_symbolic_vals(data_drought, 'dist_drought_symbol_vals' )
 
