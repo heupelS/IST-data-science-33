@@ -1,4 +1,7 @@
 {
     "editor.tabSize": 4,
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.extraPaths": [
+        "./src/utils"
+    ]
 }
