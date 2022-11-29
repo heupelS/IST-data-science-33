@@ -46,11 +46,11 @@ def plot_scatter(data, name):
 
 def plot_correlation(data, name):
 
-    fig = figure(figsize=[12, 12])
+    fig = figure(figsize=[30, 30])
     corr_mtx = abs(data.corr())
     heatmap(abs(corr_mtx), xticklabels=corr_mtx.columns, yticklabels=corr_mtx.columns, annot=True, cmap='Blues')
     title('Correlation analysis')
-    savefig( os.path.join(get_plot_folder_path(), name) )
+    savefig( os.path.join(get_plot_folder_path(), name) , dpi = 70)
 
     if SHOW_PLOTS:
         show()
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     plot_scatter(data_drought, 'spars_drought_scatter')
 
     plot_correlation(data_diabetic, 'spars_diabetic_corr')
-    plot_correlation(data_diabetic, 'spars_drought_corr')
+    plot_correlation(data_drought, 'spars_drought_corr')
