@@ -18,7 +18,7 @@ Run `pip install -r requirements.txt` to install dependencies
 
 ### SET 2: [Climate](https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data)
 
-## Don't rewrite fucntions, use modules
+## Don't rewrite functions, use modules
 
 For using modules, which can be imported in the task, please use the `src/utils` folder.
 
