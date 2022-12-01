@@ -16,8 +16,11 @@ def load_diabetic_data():
 def load_drought_data():
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
-        csv = pd.read_csv('%s/../data/drought.csv' % path_ws)
+        csv = pd.read_csv('%s/../data/drought.csv' % path_ws, parse_dates=['date'])
         return csv
 
     except Exception as e:
         print(e)
+
+def read_data():
+    return load_diabetic_data(), load_drought_data()

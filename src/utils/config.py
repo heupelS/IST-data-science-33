@@ -3,9 +3,12 @@ import matplotlib.colors as clrs
 
 from cycler import cycler
 
+import os
+
 # _________________________________________ STYLE ____________________________________________________
 
-plt.style.use('C:/Users/simeo/OneDrive/Dokumente/Uni/Master Winfo/3_Semester/Data Science/IST-data-science-33/src/utils/dslabs.mplstyle')
+path_ws = os.path.dirname(os.path.abspath(__file__))
+plt.style.use(os.path.join(path_ws, 'dslabs.mplstyle'))
 
 HATCHES = ['.', '..', '...', 'o'] #['/', '+', 'X', '*'] #'oo', 'OO', '..'
 
