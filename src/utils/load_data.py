@@ -6,7 +6,7 @@ def load_diabetic_data():
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
         data_path = os.path.join(path_ws,'..', 'data','diabetic_data.csv')
-        csv = pd.read_csv(data_path, parse_dates=['date'])
+        csv = pd.read_csv(data_path)
         return csv
 
     except Exception as e:
