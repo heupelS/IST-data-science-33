@@ -46,7 +46,7 @@ def one_hot_encode_target(df):
     lb = LabelBinarizer()
     lb.fit(trnY)
     one_hot_y = lb.transform(trnY)
-
+    #one_hot_y = pd.DataFrame(one_hot_y)
     return one_hot_y
 
 
@@ -102,7 +102,7 @@ def encode_symbolic_variables(df):
 
 
 def concat_encoded_data(binary,symbolic, numeric):
-    trn_X = concat([binary, symbolic, numeric], axis = 0)
+    trn_X = concat([binary, symbolic, numeric], axis = 1)
     return trn_X
 
 def get_numeric_data(df):
@@ -110,6 +110,7 @@ def get_numeric_data(df):
     numeric = variables['Numeric']
     numeric_data = df[numeric]
     return numeric_data
+
 
 
 if __name__ == "__main__":
@@ -122,7 +123,9 @@ if __name__ == "__main__":
     symbolic_encoded_data = encode_symbolic_variables(data_diabetic)
     numeric_data = get_numeric_data(data_diabetic)
     trn_X = concat_encoded_data(binary_encoded_data,symbolic_encoded_data, numeric_data)
-    x = 0
+    trn_X.to_csv('diabetic_X.csv')
+    #trn_y.to_csv('diabetic_y.csv')
+
 
 
 
