@@ -66,7 +66,7 @@ def replace_outliers(data, filename):
         df[var] = df[var].apply(lambda x: median if x > top_threshold or x < bottom_threshold else x)
 
     save_new_csv(df, filename)
-    print('Data after r eplacing outliers:', df.describe())
+    print('Data after replacing outliers:', df.describe())
 
 def truncate_outliers(data, filename):
 
@@ -81,4 +81,4 @@ def truncate_outliers(data, filename):
         df[var] = df[var].apply(lambda x: top_threshold if x > top_threshold else bottom_threshold if x < bottom_threshold else x)
 
     save_new_csv(df, filename)
-    print('data after truncating outliers:', df.describe())
+    print('Data after truncating outliers:', df.describe())
