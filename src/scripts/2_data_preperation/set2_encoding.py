@@ -11,15 +11,6 @@ from load_data import read_data
 from knn import KNN
 from naive_bayes import NB
 
-from ds_charts import get_variable_types
-from matplotlib.pyplot import savefig, show, figure
-
-
-###########################################
-## Select if plots show up of just saved ##
-SHOW_PLOTS = False
-###########################################
-
 
 def encode_time(df):
     # Transform to unix timestamp
