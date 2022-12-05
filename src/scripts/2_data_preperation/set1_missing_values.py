@@ -124,28 +124,26 @@ if __name__ == "__main__":
 
     replace_questionmarks(data_diabetic)
     change_to_categorical(data_diabetic)
-    trn_y = one_hot_encode_target(data_diabetic.copy())
+    # trn_y = one_hot_encode_target(data_diabetic.copy())
     
     binary_encoded_data = encode_binary_variables(data_diabetic)
     
     symbolic_encoded_data = encode_symbolic_variables(data_diabetic)
-    
+
     numeric_data = get_numeric_data(data_diabetic)
 
     trn_X = concat_encoded_data(binary_encoded_data, symbolic_encoded_data, numeric_data)
 
     save_new_csv(trn_X, 'diabetic_X.csv')
 
-    # print(trn_X['readmitted'])
+    #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+    nvalues = [17]
+    # ['manhattan', 'euclidean', 'chebyshev']
+    dist = ['manhattan']
 
-    # #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-    # nvalues = [17]
-    # # ['manhattan', 'euclidean', 'chebyshev']
-    # dist = ['manhattan']
-
-    # # Evaluation
-    # NB(trn_X.copy(), 'readmitted', 'diabetic_nb_best_res')
-    # KNN(trn_X.copy(), 'readmitted', 'diabetic_knn_best_res', nvalues=nvalues, dist=dist)
+    # Evaluation
+    NB(trn_X.copy(), 'readmitted', 'diabetic_nb_best_res')
+    KNN(trn_X.copy(), 'readmitted', 'diabetic_knn_best_res', nvalues=nvalues, dist=dist)
 
 
 
