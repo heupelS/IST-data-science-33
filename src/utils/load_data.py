@@ -1,12 +1,12 @@
 
-import csv
 import os
 import pandas as pd
 
 def load_diabetic_data():
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
-        csv = pd.read_csv('%s/../data/diabetic_data.csv' % path_ws)
+        data_path = os.path.join(path_ws,'..', 'data','diabetic_data .csv')
+        csv = pd.read_csv(data_path, parse_dates=['date'])
         return csv
 
     except Exception as e:
@@ -16,7 +16,8 @@ def load_diabetic_data():
 def load_drought_data():
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
-        csv = pd.read_csv('%s/../data/drought.csv' % path_ws, parse_dates=['date'])
+        data_path = os.path.join(path_ws,'..', 'data','drought.csv')
+        csv = pd.read_csv(data_path, parse_dates=['date'])
         return csv
 
     except Exception as e:
