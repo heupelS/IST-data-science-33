@@ -23,5 +23,21 @@ def load_drought_data():
     except Exception as e:
         print(e)
 
+
+def save_new_csv(data, filename):
+
+    if filename == 'drought.csv' or filename == 'diabetic_data.csv':
+        print(f'''Don't overwrite basic data!''')
+        return
+
+    try:
+        path_ws = os.path.dirname(os.path.abspath(__file__))
+        data_path = os.path.join(path_ws,'..', 'data', filename)
+        csv = data.to_csv(data_path, index=True)
+        return csv
+
+    except Exception as e:
+        print(e)
+
 def read_data():
     return load_diabetic_data(), load_drought_data()
