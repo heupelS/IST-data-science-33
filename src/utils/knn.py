@@ -24,7 +24,6 @@ SHOW_PLOTS = False
 def KNN(df: DataFrame, target_name: str, save_file_name: str, nvalues, dist):
 
     y: ndarray = df.pop(target_name).values
-
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=0)
 
     eval_metric = accuracy_score
