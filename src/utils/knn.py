@@ -9,9 +9,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
-from ds_charts import plot_evaluation_results, multiple_line_chart
 
 sys.path.append( os.path.join(os.path.dirname(__file__)) )
+from ds_charts import plot_evaluation_results, multiple_line_chart
 from general_utils import get_plot_folder_path
 
 
