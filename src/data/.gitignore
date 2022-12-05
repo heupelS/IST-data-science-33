@@ -1,0 +1,4 @@
+*.csv
+
+!diabetic_data.csv
+!drought.csv
