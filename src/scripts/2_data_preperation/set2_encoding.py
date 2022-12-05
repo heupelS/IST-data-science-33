@@ -15,6 +15,7 @@ from naive_bayes import NB
 ###########################################
 ## Select if plots show up of just saved ##
 SAVE_FILENAME = 'drought_encoding.csv'
+RUN_EVALUATION = False
 ###########################################
 
 
@@ -25,24 +26,31 @@ def encode_time(df):
 
 def evaluate_drought(df):
     df['drought'] = df['class']
-    df.drop(['class'], axis=1)
+    df.drop(columns=['class'], inplace=True)
 
+
+def remove_unnamed_cols(df):
+    print(df.info)
 
 if __name__ == "__main__":
 
     _, data_drought = read_data()
 
     # Encoding
+    remove_unnamed_cols(data_drought)
+
     encode_time(data_drought)
     evaluate_drought(data_drought)
 
-    save_new_csv(data_drought.copy(), SAVE_FILENAME) 
+    save_new_csv(data_drought, SAVE_FILENAME) 
  
-    #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-    nvalues = [17]
-    # ['manhattan', 'euclidean', 'chebyshev']
-    dist = ['manhattan']
+    if RUN_EVALUATION:
 
-    # Evaluation
-    NB(data_drought.copy(), 'drought', 'drought_nb_best_res')
-    KNN(data_drought.copy(), 'drought', 'drought_knn_best_res', nvalues=nvalues, dist=dist)
+        #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+        nvalues = [17]
+        # ['manhattan', 'euclidean', 'chebyshev']
+        dist = ['manhattan']
+
+        # Evaluation
+        NB(data_drought.copy(), 'drought', 'drought_nb_best_res')
+        KNN(data_drought.copy(), 'drought', 'drought_knn_best_res', nvalues=nvalues, dist=dist)
