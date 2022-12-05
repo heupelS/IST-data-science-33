@@ -1,7 +1,7 @@
 import sys, os
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
-from load_data import read_data, save_new_csv
+from load_data import read_data, save_new_csv, load_diabetic_data
 from ds_charts import bar_chart, get_variable_types
 from missing_values import *
 from knn import KNN
@@ -26,9 +26,9 @@ def replace_questionmarks(df):
     df = df.replace(['?'], np.nan)
     return df
 
-
-def load_diabetic_data():
-    """Just for Erik"""
+#rename because naming conflicts with util function
+def load_diabetic_dat_erik():
+    #Just for Erik
     filename = '/Users/erikspieler/Desktop/NTNU_MASTER/Utveksling/Data science/Project/PythonProject/Classification/Data preperation/dataset/diabetic_data.csv'
     data = read_csv(filename)
     return data   
@@ -126,7 +126,6 @@ if __name__ == "__main__":
 
     data_diabetic, _ = read_data() 
     data_diabetic = drop_id_cols(data_diabetic)
-
     data_diabetic = replace_questionmarks(data_diabetic)
     
     data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic,'data_diabetic_mv_most_frequent')
