@@ -1,9 +1,10 @@
+#%%
 import sys, os
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_data, save_new_csv
 from ds_charts import bar_chart, get_variable_types
-
+from missing_values import *
 from knn import KNN
 from naive_bayes import NB
 
@@ -23,7 +24,8 @@ SHOW_PLOTS = False
 
 
 def replace_questionmarks(df):
-    df.replace(['?'], [None])
+    df = df.replace(['?'], np.nan)
+    return df
 
 
 def load_diabetic_data():
@@ -32,6 +34,9 @@ def load_diabetic_data():
     data = read_csv(filename)
     return data   
 
+def drop_id_cols(df):
+    df = df.drop(columns = ['encounter_id','patient_nbr'])
+    return df
 
 def change_to_categorical(df):
     cat_vars = df.select_dtypes(include='object')
@@ -121,12 +126,16 @@ if __name__ == "__main__":
     # data_diabetic = load_diabetic_data()
 
     data_diabetic, _ = read_data() 
+    data_diabetic = drop_id_cols(data_diabetic)
 
-    replace_questionmarks(data_diabetic)
-    change_to_categorical(data_diabetic)
+    data_diabetic = replace_questionmarks(data_diabetic)
+    
+    data_diabetic = filling_missing_value_most_frequent(data_diabetic,'data_diabetic_mv_most_frequent')
+
+    #change_to_categorical(data_diabetic)
     # trn_y = one_hot_encode_target(data_diabetic.copy())
     
-    binary_encoded_data = encode_binary_variables(data_diabetic)
+    """ binary_encoded_data = encode_binary_variables(data_diabetic)
     
     symbolic_encoded_data = encode_symbolic_variables(data_diabetic)
 
@@ -143,11 +152,7 @@ if __name__ == "__main__":
 
     # Evaluation
     NB(trn_X.copy(), 'readmitted', 'diabetic_nb_best_res')
-    KNN(trn_X.copy(), 'readmitted', 'diabetic_knn_best_res', nvalues=nvalues, dist=dist)
+    KNN(trn_X.copy(), 'readmitted', 'diabetic_knn_best_res', nvalues=nvalues, dist=dist) """
 
 
-
-
-
-
-
+# %%
