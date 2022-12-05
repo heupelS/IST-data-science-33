@@ -1,4 +1,3 @@
-#%%
 import sys, os
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
@@ -130,8 +129,8 @@ if __name__ == "__main__":
 
     data_diabetic = replace_questionmarks(data_diabetic)
     
-    data_diabetic = filling_missing_value_most_frequent(data_diabetic,'data_diabetic_mv_most_frequent')
-
+    data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic,'data_diabetic_mv_most_frequent')
+    data_diabetic_mv_deleted_rows = drop_missing_records(data_diabetic, 'data_diabetic_mv_deleted_rows')
     #change_to_categorical(data_diabetic)
     # trn_y = one_hot_encode_target(data_diabetic.copy())
     
@@ -153,6 +152,3 @@ if __name__ == "__main__":
     # Evaluation
     NB(trn_X.copy(), 'readmitted', 'diabetic_nb_best_res')
     KNN(trn_X.copy(), 'readmitted', 'diabetic_knn_best_res', nvalues=nvalues, dist=dist) """
-
-
-# %%

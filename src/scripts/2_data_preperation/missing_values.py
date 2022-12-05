@@ -40,7 +40,7 @@ def filling_missing_value_most_frequent(df, filename):
         imp = SimpleImputer(strategy='most_frequent', missing_values=nan, copy=True)
         tmp_bool = DataFrame(imp.fit_transform(df[binary_vars]), columns=binary_vars)
 
-    df = concat([tmp_nr, tmp_sb, tmp_bool], axis=1)
+    df = concat([tmp_nr, tmp_sb, tmp_bool], axis=1)  # type: ignore
     df.index = df.index
 
     save_new_csv(df, filename)
@@ -56,6 +56,7 @@ def drop_missing_records(df, filename):
 
     save_new_csv(df, filename)
     print(df.shape)
+    return df
 
 
 def drop_missing_values_cols(df, filename):
