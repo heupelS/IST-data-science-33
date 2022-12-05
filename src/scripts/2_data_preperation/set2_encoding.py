@@ -6,10 +6,16 @@ import pandas as pd
 import numpy as np
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
-from general_utils import get_plot_folder_path
-from load_data import read_data
+from load_data import read_data, save_new_csv
+
 from knn import KNN
 from naive_bayes import NB
+
+
+###########################################
+## Select if plots show up of just saved ##
+SAVE_FILENAME = 'drought_encoding.csv'
+###########################################
 
 
 def encode_time(df):
@@ -30,6 +36,8 @@ if __name__ == "__main__":
     encode_time(data_drought)
     evaluate_drought(data_drought)
 
+    save_new_csv(data_drought.copy(), SAVE_FILENAME) 
+ 
     #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
     nvalues = [17]
     # ['manhattan', 'euclidean', 'chebyshev']
