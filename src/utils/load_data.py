@@ -2,6 +2,8 @@
 import os
 import pandas as pd
 
+# Leave Standalone, maybe we have to adjust some parameter 
+# for the loading!
 def load_diabetic_data():
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
@@ -12,12 +14,27 @@ def load_diabetic_data():
     except Exception as e:
         print(e)
 
-
+# Leave Standalone, maybe we have to adjust some parameter 
+# for the loading!
 def load_drought_data():
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
         data_path = os.path.join(path_ws,'..', 'data','drought.csv')
         csv = pd.read_csv(data_path, parse_dates=['date'])
+        return csv
+
+    except Exception as e:
+        print(e)
+
+def read_data():
+    return load_diabetic_data(), load_drought_data()
+
+
+def read_data_by_filename(filename):
+    try:
+        path_ws = os.path.dirname(os.path.abspath(__file__))
+        data_path = os.path.join(path_ws,'..', 'data', filename)
+        csv = pd.read_csv(data_path)
         return csv
 
     except Exception as e:
@@ -38,6 +55,3 @@ def save_new_csv(data, filename):
 
     except Exception as e:
         print(e)
-
-def read_data():
-    return load_diabetic_data(), load_drought_data()
