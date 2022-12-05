@@ -1,20 +1,19 @@
 import sys, os
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
-from general_utils import get_plot_folder_path
-from load_data import read_data
-
+from load_data import read_data, save_new_csv
 from ds_charts import bar_chart, get_variable_types
+
+from knn import KNN
+from naive_bayes import NB
+
 import pandas as pd
+from pandas import DataFrame, read_csv, unique, concat
+
 from matplotlib.pyplot import savefig, show, figure
-from pandas import DataFrame, read_csv, unique
+from sklearn.preprocessing import LabelBinarizer, LabelEncoder
+
 import numpy as np
-from sklearn.preprocessing import LabelBinarizer
-
-
-from pandas import DataFrame, concat
-from ds_charts import get_variable_types
-from sklearn.preprocessing import LabelEncoder
 from numpy import number
 
 ###########################################
@@ -26,11 +25,13 @@ SHOW_PLOTS = False
 def replace_questionmarks(df):
     df.replace(['?'], [None])
 
+
 def load_diabetic_data():
     """Just for Erik"""
     filename = '/Users/erikspieler/Desktop/NTNU_MASTER/Utveksling/Data science/Project/PythonProject/Classification/Data preperation/dataset/diabetic_data.csv'
     data = read_csv(filename)
     return data   
+
 
 def change_to_categorical(df):
     cat_vars = df.select_dtypes(include='object')
@@ -81,6 +82,7 @@ def encode_binary_variables(df):
 
     return new_binary_variables_data
 
+
 def encode_symbolic_variables(df):
     variables = get_variable_types(df)
     symbolic = variables['Symbolic']
@@ -105,6 +107,7 @@ def concat_encoded_data(binary,symbolic, numeric):
     trn_X = concat([binary, symbolic, numeric], axis = 1)
     return trn_X
 
+
 def get_numeric_data(df):
     variables = get_variable_types(df)
     numeric = variables['Numeric']
@@ -115,16 +118,35 @@ def get_numeric_data(df):
 
 if __name__ == "__main__":
 
-    data_diabetic = load_diabetic_data()
+    # data_diabetic = load_diabetic_data()
+
+    data_diabetic, _ = read_data() 
+
     replace_questionmarks(data_diabetic)
     change_to_categorical(data_diabetic)
-    trn_y = one_hot_encode_target(data_diabetic)
+    trn_y = one_hot_encode_target(data_diabetic.copy())
+    
     binary_encoded_data = encode_binary_variables(data_diabetic)
+    
     symbolic_encoded_data = encode_symbolic_variables(data_diabetic)
+    
     numeric_data = get_numeric_data(data_diabetic)
-    trn_X = concat_encoded_data(binary_encoded_data,symbolic_encoded_data, numeric_data)
-    trn_X.to_csv('diabetic_X.csv')
-    #trn_y.to_csv('diabetic_y.csv')
+
+    trn_X = concat_encoded_data(binary_encoded_data, symbolic_encoded_data, numeric_data)
+
+    save_new_csv(trn_X, 'diabetic_X.csv')
+
+    # print(trn_X['readmitted'])
+
+    # #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+    # nvalues = [17]
+    # # ['manhattan', 'euclidean', 'chebyshev']
+    # dist = ['manhattan']
+
+    # # Evaluation
+    # NB(trn_X.copy(), 'readmitted', 'diabetic_nb_best_res')
+    # KNN(trn_X.copy(), 'readmitted', 'diabetic_knn_best_res', nvalues=nvalues, dist=dist)
+
 
 
 
