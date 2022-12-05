@@ -1,7 +1,12 @@
 from sklearn.impute import SimpleImputer
 from pandas import concat, DataFrame
-from ds_charts import get_variable_types
 from numpy import nan
+
+sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
+from load_data import save_new_csv
+
+from ds_charts import get_variable_types
+
 
 # Data should be encoded and inlcude only numeric variables!
 # strategy: mean / median 

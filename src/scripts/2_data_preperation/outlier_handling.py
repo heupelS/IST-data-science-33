@@ -8,8 +8,7 @@ import pandas as pd
 import numpy as np
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
-from general_utils import get_plot_folder_path
-from load_data import read_data, save_new_csv
+from load_data import save_new_csv
 
 from ds_charts import get_variable_types
 
