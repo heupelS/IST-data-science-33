@@ -52,12 +52,15 @@ def KNN(df: DataFrame, target_name: str, save_file_name: str, nvalues, dist):
 
     figure()
     multiple_line_chart(nvalues, values, title='KNN variants', xlabel='n', ylabel=str(accuracy_score), percentage=True)
-    print('Best results with %d neighbors and %s'%(best[0], best[1]))
-    savefig( os.path.join(get_plot_folder_path(), '%s_1' % save_file_name) )
+    
+    print('--- Best results with %d neighbors and %s'%(best[0], best[1]))
+    savefig( os.path.join(get_plot_folder_path(), '%s_results' % save_file_name) )
 
+    print('--- Evaluation of KNN')
     evaluate_knn(X_train, y_train, X_test, y_test, best)
-    savefig(  os.path.join(get_plot_folder_path(), '%s_2' % save_file_name) )
+    savefig(  os.path.join(get_plot_folder_path(), '%s_eval' % save_file_name) )
 
+    print('--- Overfitting of KNN')
     evaluate_overfitting(X_train, y_train, X_test, y_test, 'euclidean', nvalues=nvalues)
     savefig(  os.path.join(get_plot_folder_path(), '%s_overfitting' % save_file_name) )
 
