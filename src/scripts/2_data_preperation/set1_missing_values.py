@@ -4,6 +4,7 @@ sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_data, save_new_csv
 from ds_charts import bar_chart, get_variable_types
 from missing_values import *
+
 from knn import KNN
 from naive_bayes import NB
 
@@ -15,11 +16,6 @@ from sklearn.preprocessing import LabelBinarizer, LabelEncoder
 
 import numpy as np
 from numpy import number
-
-###########################################
-## Select if plots show up of just saved ##
-SHOW_PLOTS = False
-###########################################
 
 
 def replace_questionmarks(df):
@@ -33,83 +29,41 @@ def load_diabetic_data():
     data = read_csv(filename)
     return data   
 
+
 def drop_id_cols(df):
     df = df.drop(columns = ['encounter_id','patient_nbr'])
     return df
+
 
 def change_to_categorical(df):
     cat_vars = df.select_dtypes(include='object')
     df[cat_vars.columns] = df.select_dtypes(['object']).apply(lambda x: x.astype('category'))
 
 
-def one_hot_encode_target(df):
-    #Pop target values from dataset
-    target = 'readmitted'
-    trnY: np.ndarray = df.pop(target).values
-
-    #One hot encode target values
-    lb = LabelBinarizer()
-    lb.fit(trnY)
-    one_hot_y = lb.transform(trnY)
-    #one_hot_y = pd.DataFrame(one_hot_y)
-    return one_hot_y
-
-
 def encode_binary_variables(df):
     variables = get_variable_types(df)
     binary = variables['Binary']
 
+    df_bin = pd.DataFrame()
     binary_encoder = LabelEncoder()
-    new_binary_variables = []
     for var in binary:
         binary_encoder.fit(df[var])
-        new_binary_variables.append(binary_encoder.transform(df[var]))
+        df_bin[var] = binary_encoder.transform(df[var])
 
-    #Change order of the class ['change']
-    i = 0
-    for entry in new_binary_variables[7]:
-        if entry == 0:
-            new_binary_variables[7][i] = 1
-            i += 1
-        else:
-            new_binary_variables[7][i] = 0
-            i += 1
-
-    new_binary_variables_data = pd.DataFrame(new_binary_variables)
-
-    new_binary_variables_data = new_binary_variables_data.T
-
-    i = 0
-    while i  < 9:
-        new_binary_variables_data.rename(columns = {i: binary[i]}, inplace = True)
-        i+=1
-
-    return new_binary_variables_data
+    return df_bin
 
 
 def encode_symbolic_variables(df):
     variables = get_variable_types(df)
     symbolic = variables['Symbolic']
     symbolic_encoder = LabelEncoder()
-    new_symbolic_variables = []
+
+    df_sym = pd.DataFrame()
     for var in symbolic:
         symbolic_encoder.fit(df[var])
-        new_symbolic_variables.append(symbolic_encoder.transform(df[var]))
+        df_sym[var] = symbolic_encoder.transform(df[var])
 
-    new_symbolic_variables_data = pd.DataFrame(new_symbolic_variables)
-    new_symbolic_variables_data = new_symbolic_variables_data.T
-
-    i = 0
-    while i  < 27:
-        new_symbolic_variables_data.rename(columns = {i: symbolic[i]}, inplace = True)
-        i+=1
-        
-    return new_symbolic_variables_data
-
-
-def concat_encoded_data(binary,symbolic, numeric):
-    trn_X = concat([binary, symbolic, numeric], axis = 1)
-    return trn_X
+    return df_sym
 
 
 def get_numeric_data(df):
@@ -119,30 +73,22 @@ def get_numeric_data(df):
     return numeric_data
 
 
+def concat_encoded_data(binary, symbolic, numeric):
+    final_df = concat([binary, symbolic, numeric], axis = 1)
+    return final_df
 
-if __name__ == "__main__":
 
-    # data_diabetic = load_diabetic_data()
+def encode_and_evaluate(df, filename):
 
-    data_diabetic, _ = read_data() 
-    data_diabetic = drop_id_cols(data_diabetic)
+    change_to_categorical(df)
 
-    data_diabetic = replace_questionmarks(data_diabetic)
-    
-    data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic,'data_diabetic_mv_most_frequent')
-    data_diabetic_mv_deleted_rows = drop_missing_records(data_diabetic, 'data_diabetic_mv_deleted_rows')
-    #change_to_categorical(data_diabetic)
-    # trn_y = one_hot_encode_target(data_diabetic.copy())
-    
-    """ binary_encoded_data = encode_binary_variables(data_diabetic)
-    
-    symbolic_encoded_data = encode_symbolic_variables(data_diabetic)
+    binary_encoded_data = encode_binary_variables(df)
+    symbolic_encoded_data = encode_symbolic_variables(df)
+    numeric_data = get_numeric_data(df)
 
-    numeric_data = get_numeric_data(data_diabetic)
+    final_df = concat_encoded_data(binary_encoded_data, symbolic_encoded_data, numeric_data)
 
-    trn_X = concat_encoded_data(binary_encoded_data, symbolic_encoded_data, numeric_data)
-
-    save_new_csv(trn_X, 'diabetic_X.csv')
+    save_new_csv(final_df, filename)
 
     #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
     nvalues = [17]
@@ -150,5 +96,20 @@ if __name__ == "__main__":
     dist = ['manhattan']
 
     # Evaluation
-    NB(trn_X.copy(), 'readmitted', 'diabetic_nb_best_res')
-    KNN(trn_X.copy(), 'readmitted', 'diabetic_knn_best_res', nvalues=nvalues, dist=dist) """
+    # NB(final_df.copy(), 'readmitted', '%s_nb_best_res' % filename)
+    KNN(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename, nvalues=nvalues, dist=dist)
+
+
+if __name__ == "__main__":
+
+    data_diabetic, _ = read_data() 
+    data_diabetic = drop_id_cols(data_diabetic)
+
+    data_diabetic = replace_questionmarks(data_diabetic)
+    
+    data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic.copy(),'data_diabetic_mv_most_frequent')
+    data_diabetic_mv_deleted_rows = drop_missing_records(data_diabetic.copy(), 'data_diabetic_mv_deleted_rows')
+
+    encode_and_evaluate(data_diabetic_mv_filled, 'diabetic_mv_most_frequent')
+    encode_and_evaluate(data_diabetic_mv_deleted_rows, 'diabetic_mv_deleted_rows')
+    
