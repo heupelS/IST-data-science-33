@@ -88,10 +88,10 @@ def encode_and_evaluate(df, filename):
 
     final_df = concat_encoded_data(binary_encoded_data, symbolic_encoded_data, numeric_data)
 
-    save_new_csv(final_df, filename)
+    save_new_csv(final_df, '%s.csv' % filename)
 
     #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-    nvalues = [17]
+    nvalues = [3, 15, 17, 19]
     # ['manhattan', 'euclidean', 'chebyshev']
     dist = ['manhattan']
 
@@ -110,6 +110,6 @@ if __name__ == "__main__":
     data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic.copy(),'data_diabetic_mv_most_frequent')
     data_diabetic_mv_deleted_rows = drop_missing_records(data_diabetic.copy(), 'data_diabetic_mv_deleted_rows')
 
-    # encode_and_evaluate(data_diabetic_mv_filled, 'diabetic_mv_most_frequent')
-    # encode_and_evaluate(data_diabetic_mv_deleted_rows, 'diabetic_mv_deleted_rows')
+    encode_and_evaluate(data_diabetic_mv_filled, 'diabetic_mv_most_frequent')
+    encode_and_evaluate(data_diabetic_mv_deleted_rows, 'diabetic_mv_deleted_rows')
     
