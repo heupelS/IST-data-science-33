@@ -17,7 +17,7 @@ from evaluation.naive_bayes import NB
 
 ###########################################
 ## Select if plots show up of just saved ##
-FILENAME_LOAD = 'diabetic_mv_deleted_rows.csv'
+FILENAME_LOAD = 'diabetic_mv_deleted_rows_encoded.csv'
 FILENAME = 'diabetic_drop_outliers.csv'
 RUN_EVALUATION = False
 ###########################################
@@ -51,7 +51,6 @@ if __name__ == "__main__":
     data_drought_out = read_data_by_filename(FILENAME)
 
     data_drought.drop(columns=['Unnamed: 0'], inplace=True)
-    data_drought.drop(columns=['Unnamed: 0.1'], inplace=True)
 
     # Scaling encoded data with handled missing values and outliers
     scaling(data_drought_out)

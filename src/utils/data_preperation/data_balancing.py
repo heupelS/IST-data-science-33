@@ -8,7 +8,7 @@ from pandas import read_csv
 from matplotlib.pyplot import figure, savefig, show
 
 
-sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
+sys.path.append( os.path.join(os.path.dirname(__file__), '..') )
 from load_data import save_new_csv, read_data, load_diabetic_data, load_drought_data
 from ds_charts import bar_chart
 
@@ -56,7 +56,7 @@ def undersample_dataset(df: DataFrame, target_var: str, new_file_name: str):
     df_neg_sample = DataFrame(df_negatives.sample(len(df_positives)))
     df_under = concat([df_positives, df_neg_sample], axis=0)
 
-    save_new_csv(df_under, new_file_name)
+    save_new_csv(df_under, '%s_undersampled.csv' % new_file_name)
 
     values['UnderSample'] = [len(df_positives), len(df_neg_sample)]
     print('Minority class=', positive_class, ':', len(df_positives))
@@ -78,7 +78,7 @@ def oversample_dataset(df: DataFrame, target_var: str, new_file_name: str):
     df_pos_sample = DataFrame(df_positives.sample(len(df_negatives), replace=True))
     df_over = concat([df_pos_sample, df_negatives], axis=0)
 
-    save_new_csv(df_over, new_file_name)
+    save_new_csv(df_over, '%s_oversampled.csv' % new_file_name)
 
     values['OverSample'] = [len(df_pos_sample), len(df_negatives)]
     print('Minority class=', positive_class, ':', len(df_pos_sample))
@@ -88,6 +88,6 @@ def oversample_dataset(df: DataFrame, target_var: str, new_file_name: str):
 
 if __name__ == "__main__":
     diabeteic_data, _ = read_data()
-    target = 'readmitted'
-    plot_dataset_balance(diabeteic_data, target, 'diabetic_dataset')
-    
+    #plot_dataset_balance(diabeteic_data, target, 'diabetic_dataset')
+    #undersample_dataset(diabeteic_data, 'readmitted', 'diabetic_dataset')
+    #oversample_dataset(diabeteic_data, 'readmitted', 'diabetic_dataset')

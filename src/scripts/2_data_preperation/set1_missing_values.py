@@ -111,6 +111,6 @@ if __name__ == "__main__":
     data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic.copy(),'data_diabetic_mv_most_frequent.csv')
     data_diabetic_mv_deleted_rows = drop_missing_records(data_diabetic.copy(), 'data_diabetic_mv_deleted_rows.csv')
 
-    encode_and_evaluate(data_diabetic_mv_filled, 'diabetic_mv_most_frequent')
-    encode_and_evaluate(data_diabetic_mv_deleted_rows, 'diabetic_mv_deleted_rows')
+    encode_and_evaluate(data_diabetic_mv_filled, 'diabetic_mv_most_frequent_encoded')
+    encode_and_evaluate(data_diabetic_mv_deleted_rows, 'diabetic_mv_deleted_rows_encoded')
         
