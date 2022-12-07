@@ -12,7 +12,9 @@ from ds_charts import get_variable_types
 from matplotlib.pyplot import subplots, show, savefig
 
 
-def std_scaler_z_score(df, filename):
+def std_scaler_z_score(df, target, filename):
+
+    target = df.pop(target) 
 
     variables = get_variable_types(df)
 
@@ -22,7 +24,6 @@ def std_scaler_z_score(df, filename):
     numeric_data = df[numeric]
     binary_data = df[binary]
 
-    target = numeric_data.pop('readmitted') 
 
     transf = StandardScaler(with_mean=True, with_std=True, copy=True).fit(numeric_data)
     scaled_data = DataFrame(transf.transform(numeric_data), index=numeric_data.index, columns=numeric_data.columns)
@@ -35,15 +36,16 @@ def std_scaler_z_score(df, filename):
     return norm_data_zscore
 
 
-def std_scaler_minmax(df, filename):
+def std_scaler_minmax(df, target, filename):
 
+    target = df.pop(target) 
+    
     variables = get_variable_types(df)
 
     numeric = variables['Numeric']
     binary = variables['Binary']
 
     numeric_data = df[numeric]
-    target = numeric_data.pop('readmitted') 
 
     binary_data = df[binary]
 

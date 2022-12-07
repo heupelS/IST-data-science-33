@@ -15,7 +15,7 @@ from evaluation.naive_bayes import NB
 ###########################################
 ## Select if plots show up or just saved ##
 SAVE_FILENAME = 'drought_encoding.csv'
-RUN_EVALUATION = True
+RUN_EVALUATION = False
 ###########################################
 
 

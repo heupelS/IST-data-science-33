@@ -16,13 +16,13 @@ from evaluation.naive_bayes import NB
 ###########################################
 ## Select if plots show up of just saved ##
 FILENAME = 'drought_drop_outliers.csv'
-RUN_EVALUATION = True
+RUN_EVALUATION = False
 ###########################################
 
 
 def scaling(df):
-    zscore = std_scaler_z_score(df, 'std_scaler_z_score.csv')
-    minmax = std_scaler_minmax(df, 'std_scaler_z_minmax.csv')
+    zscore = std_scaler_z_score(df.copy(), 'drought', 'std_scaler_z_score.csv')
+    minmax = std_scaler_minmax(df.copy(), 'drought', 'std_scaler_z_minmax.csv')
 
     scale_boxplot(df, zscore, minmax, 'std_scaler_comparison', False)
 

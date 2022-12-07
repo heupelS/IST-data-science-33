@@ -24,8 +24,8 @@ RUN_EVALUATION = False
 
 
 def scaling(df):
-    zscore = std_scaler_z_score(df, 'diabetic_std_scaler_z_score.csv')
-    minmax = std_scaler_minmax(df, 'diabetic_std_scaler_z_minmax.csv')
+    zscore = std_scaler_z_score(df.copy(), 'readmitted', 'diabetic_std_scaler_z_score.csv')
+    minmax = std_scaler_minmax(df.copy(), 'readmitted', 'diabetic_std_scaler_z_minmax.csv')
 
     # scale_boxplot(df, zscore, minmax, 'std_scaler_comparison', False)
 
