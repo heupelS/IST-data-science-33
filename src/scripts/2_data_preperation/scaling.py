@@ -14,20 +14,44 @@ from matplotlib.pyplot import subplots, show, savefig
 
 def std_scaler_z_score(df, filename):
 
-    print(df.info())
+    variables = get_variable_types(df)
 
-    transf = StandardScaler(with_mean=True, with_std=True, copy=True).fit(df)
-    norm_data_zscore = DataFrame(transf.transform(df))
+    numeric = variables['Numeric']
+    binary = variables['Binary']
+
+    numeric_data = df[numeric]
+    binary_data = df[binary]
+
+    target = numeric_data.pop('readmitted') 
+
+    transf = StandardScaler(with_mean=True, with_std=True, copy=True).fit(numeric_data)
+    scaled_data = DataFrame(transf.transform(numeric_data), index=numeric_data.index, columns=numeric_data.columns)
+
+    norm_data_zscore = concat([scaled_data, binary_data, target], axis = 1)
 
     save_new_csv(norm_data_zscore, filename)
     print(norm_data_zscore.describe())
 
     return norm_data_zscore
 
-def std_scaler_z_minmax(df, filename):
-    transf = MinMaxScaler(feature_range=(0, 1), copy=True).fit(df)
-    norm_data_minmax = DataFrame(transf.transform(df))
+
+def std_scaler_minmax(df, filename):
+
+    variables = get_variable_types(df)
+
+    numeric = variables['Numeric']
+    binary = variables['Binary']
+
+    numeric_data = df[numeric]
+    target = numeric_data.pop('readmitted') 
+
+    binary_data = df[binary]
+
+    transf = MinMaxScaler(feature_range=(0, 1), copy=True).fit(numeric_data)
+    scaled_values = DataFrame(transf.transform(numeric_data), index=numeric_data.index, columns=numeric_data.columns)
     
+    norm_data_minmax = concat([scaled_values, binary_data, target], axis = 1)
+
     save_new_csv(norm_data_minmax, filename)
     print(norm_data_minmax.describe())
 
