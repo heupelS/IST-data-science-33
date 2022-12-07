@@ -8,7 +8,7 @@ import pandas as pd
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import save_new_csv, read_data_by_filename
 
-from outlier_handling import replace_outliers, drop_outliers, truncate_outliers
+from data_preperation.outlier_handling import replace_outliers, drop_outliers, truncate_outliers
 
 
 ###########################################

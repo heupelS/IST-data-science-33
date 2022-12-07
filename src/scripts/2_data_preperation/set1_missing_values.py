@@ -3,7 +3,7 @@ import sys, os
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_data, save_new_csv, load_diabetic_data
 from ds_charts import bar_chart, get_variable_types
-from missing_values import *
+from data_preperation.missing_values import *
 
 from evaluation.knn import KNN
 from evaluation.naive_bayes import NB

@@ -7,7 +7,7 @@ import pandas as pd
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_data_by_filename, save_new_csv
 
-from scaling import std_scaler_z_score, std_scaler_minmax, scale_boxplot
+from data_preperation.scaling import std_scaler_z_score, std_scaler_minmax, scale_boxplot
 
 from evaluation.knn import KNN
 from evaluation.naive_bayes import NB
