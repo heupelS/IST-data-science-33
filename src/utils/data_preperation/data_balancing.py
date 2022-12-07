@@ -6,17 +6,18 @@ from pandas import concat, DataFrame
 from pandas import read_csv
 
 from matplotlib.pyplot import figure, savefig, show
-from ds_charts import bar_chart
+
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
-from load_data import save_new_csv
+from load_data import save_new_csv, read_data, load_diabetic_data, load_drought_data
+from ds_charts import bar_chart
 
 from general_utils import get_plot_folder_path
 
 
 ###########################################
 ## Select if plots show up of just saved ##
-SHOW_PLOTS = False
+SHOW_PLOTS = True
 ###########################################
 
 
@@ -85,4 +86,8 @@ def oversample_dataset(df: DataFrame, target_var: str, new_file_name: str):
     print('Proportion:', round(len(df_pos_sample) / len(df_negatives), 2), ': 1')
 
 
-
+if __name__ == "__main__":
+    diabeteic_data, _ = read_data()
+    target = 'readmitted'
+    plot_dataset_balance(diabeteic_data, target, 'diabetic_dataset')
+    
