@@ -11,15 +11,15 @@ from data_preperation.scaling import std_scaler_z_score, std_scaler_minmax, scal
 
 from data_preperation.outlier_handling import replace_outliers, drop_outliers, truncate_outliers
 
-from knn import KNN
-from naive_bayes import NB
+from evaluation.knn import KNN
+from evaluation.naive_bayes import NB
 
 
 ###########################################
 ## Select if plots show up of just saved ##
 FILENAME_LOAD = 'diabetic_mv_deleted_rows.csv'
 FILENAME = 'diabetic_drop_outliers.csv'
-RUN_EVALUATION = True
+RUN_EVALUATION = False
 ###########################################
 
 
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     data_drought = read_data_by_filename(FILENAME_LOAD)
     handle_outliers(data_drought)
 
-    data_drought_out = read_data_by_filename(FILENAME_LOAD)
+    data_drought_out = read_data_by_filename(FILENAME)
 
     # Scaling encoded data with handled missing values and outliers
     scaling(data_drought_out)

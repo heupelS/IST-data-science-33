@@ -17,6 +17,10 @@ from sklearn.preprocessing import LabelBinarizer, LabelEncoder
 import numpy as np
 from numpy import number
 
+###########################################
+RUN_EVALUATION = False
+###########################################
+
 
 def replace_questionmarks(df):
     df = df.replace(['?'], np.nan)
@@ -90,9 +94,11 @@ def encode_and_evaluate(df, filename):
 
     save_new_csv(final_df, '%s.csv' % filename)
     
-    # Evaluation
-    NB(final_df.copy(), 'readmitted', '%s_nb_best_res' % filename)
-    KNN(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename)
+    if RUN_EVALUATION:
+
+        # Evaluation
+        NB(final_df.copy(), 'readmitted', '%s_nb_best_res' % filename)
+        KNN(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename)
 
 
 if __name__ == "__main__":
@@ -102,9 +108,9 @@ if __name__ == "__main__":
 
     data_diabetic = replace_questionmarks(data_diabetic)
     
-    data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic.copy(),'data_diabetic_mv_most_frequent')
-    data_diabetic_mv_deleted_rows = drop_missing_records(data_diabetic.copy(), 'data_diabetic_mv_deleted_rows')
+    data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic.copy(),'data_diabetic_mv_most_frequent.csv')
+    data_diabetic_mv_deleted_rows = drop_missing_records(data_diabetic.copy(), 'data_diabetic_mv_deleted_rows.csv')
 
     encode_and_evaluate(data_diabetic_mv_filled, 'diabetic_mv_most_frequent')
     encode_and_evaluate(data_diabetic_mv_deleted_rows, 'diabetic_mv_deleted_rows')
-    
+        
