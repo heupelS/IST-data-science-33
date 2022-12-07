@@ -31,17 +31,12 @@ def scaling(df):
 
     if RUN_EVALUATION:
 
-        #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-        nvalues = [17]
-        # ['manhattan', 'euclidean', 'chebyshev']
-        dist = ['manhattan']
-        
         # Evaluation
         NB(zscore.copy(), 'readmitted', 'diabetic_nb_scale_zscore')
         NB(minmax.copy(), 'readmitted', 'diabetic_nb_scale_minmax')
         
-        KNN(zscore.copy(), 'readmitted', 'diabetic_knn_scale_zscore', nvalues=nvalues, dist=dist)
-        KNN(minmax.copy(), 'readmitted', 'diabetic_knn_scale_minmax', nvalues=nvalues, dist=dist)
+        KNN(zscore.copy(), 'readmitted', 'diabetic_knn_scale_zscore')
+        KNN(minmax.copy(), 'readmitted', 'diabetic_knn_scale_minmax')
 
 
 def handle_outliers(data):

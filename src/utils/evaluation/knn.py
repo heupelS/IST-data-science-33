@@ -20,10 +20,16 @@ from general_utils import get_plot_folder_path
 ###########################################
 ## Select if plots show up of just saved ##
 SHOW_PLOTS = False
+
+#  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+nvalues = [17]
+# ['manhattan', 'euclidean', 'chebyshev']
+dist = ['manhattan']
+
 ###########################################
 
 
-def KNN(df: DataFrame, target_name: str, save_file_name: str, nvalues, dist):
+def KNN(df: DataFrame, target_name: str, save_file_name: str):
 
     y: ndarray = df.pop(target_name).values
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=0)

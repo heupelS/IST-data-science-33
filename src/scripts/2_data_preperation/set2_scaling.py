@@ -9,8 +9,8 @@ from load_data import read_data_by_filename, save_new_csv
 
 from scaling import std_scaler_z_score, std_scaler_minmax, scale_boxplot
 
-from knn import KNN
-from naive_bayes import NB
+from evaluation.knn import KNN
+from evaluation.naive_bayes import NB
 
 
 ###########################################
@@ -28,17 +28,12 @@ def scaling(df):
 
     if RUN_EVALUATION:
 
-        #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-        nvalues = [17]
-        # ['manhattan', 'euclidean', 'chebyshev']
-        dist = ['manhattan']
-        
         # Evaluation
         NB(zscore.copy(), 'drought', 'drought_nb_scale_zscore')
         NB(minmax.copy(), 'drought', 'drought_nb_scale_minmax')
         
-        KNN(zscore.copy(), 'drought', 'drought_knn_scale_zscore', nvalues=nvalues, dist=dist)
-        KNN(minmax.copy(), 'drought', 'drought_knn_scale_minmax', nvalues=nvalues, dist=dist)
+        KNN(zscore.copy(), 'drought', 'drought_knn_scale_zscore')
+        KNN(minmax.copy(), 'drought', 'drought_knn_scale_minmax')
 
 
 if __name__ == "__main__":

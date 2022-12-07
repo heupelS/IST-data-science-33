@@ -5,8 +5,8 @@ from load_data import read_data, save_new_csv, load_diabetic_data
 from ds_charts import bar_chart, get_variable_types
 from missing_values import *
 
-from knn import KNN
-from naive_bayes import NB
+from evaluation.knn import KNN
+from evaluation.naive_bayes import NB
 
 import pandas as pd
 from pandas import DataFrame, read_csv, unique, concat
@@ -89,15 +89,10 @@ def encode_and_evaluate(df, filename):
     final_df = concat_encoded_data(binary_encoded_data, symbolic_encoded_data, numeric_data)
 
     save_new_csv(final_df, '%s.csv' % filename)
-
-    #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-    nvalues = [3, 15, 17, 19]
-    # ['manhattan', 'euclidean', 'chebyshev']
-    dist = ['manhattan']
-
+    
     # Evaluation
     NB(final_df.copy(), 'readmitted', '%s_nb_best_res' % filename)
-    KNN(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename, nvalues=nvalues, dist=dist)
+    KNN(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename)
 
 
 if __name__ == "__main__":
