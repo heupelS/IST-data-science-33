@@ -25,7 +25,6 @@ def handle_outliers(data):
 
 if __name__ == "__main__":
 
-
     data_drought = read_data_by_filename(FILENAME)
 
     # Encoding

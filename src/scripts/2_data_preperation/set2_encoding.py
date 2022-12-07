@@ -13,9 +13,9 @@ from naive_bayes import NB
 
 
 ###########################################
-## Select if plots show up of just saved ##
+## Select if plots show up or just saved ##
 SAVE_FILENAME = 'drought_encoding.csv'
-RUN_EVALUATION = False
+RUN_EVALUATION = True
 ###########################################
 
 
@@ -29,16 +29,11 @@ def evaluate_drought(df):
     df.drop(columns=['class'], inplace=True)
 
 
-def remove_unnamed_cols(df):
-    print(df.info)
-
 if __name__ == "__main__":
 
     _, data_drought = read_data()
 
     # Encoding
-    remove_unnamed_cols(data_drought)
-
     encode_time(data_drought)
     evaluate_drought(data_drought)
 

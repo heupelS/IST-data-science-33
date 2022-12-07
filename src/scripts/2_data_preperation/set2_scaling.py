@@ -7,25 +7,45 @@ import pandas as pd
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_data_by_filename, save_new_csv
 
-from scaling import std_scaler_z_score, std_scaler_z_minmax, scale_boxplot
+from scaling import std_scaler_z_score, std_scaler_minmax, scale_boxplot
+
+from knn import KNN
+from naive_bayes import NB
+
 
 ###########################################
 ## Select if plots show up of just saved ##
 FILENAME = 'drought_drop_outliers.csv'
+RUN_EVALUATION = True
 ###########################################
 
 
 def scaling(df):
     zscore = std_scaler_z_score(df, 'std_scaler_z_score.csv')
-    minmax = std_scaler_z_minmax(df, 'std_scaler_z_minmax.csv')
+    minmax = std_scaler_minmax(df, 'std_scaler_z_minmax.csv')
 
-    scale_boxplot(df, zscore, minmax, 'std_scaler_comparison', True)
+    scale_boxplot(df, zscore, minmax, 'std_scaler_comparison', False)
+
+    if RUN_EVALUATION:
+
+        #  [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+        nvalues = [17]
+        # ['manhattan', 'euclidean', 'chebyshev']
+        dist = ['manhattan']
+        
+        # Evaluation
+        NB(zscore.copy(), 'drought', 'drought_nb_scale_zscore')
+        NB(minmax.copy(), 'drought', 'drought_nb_scale_minmax')
+        
+        KNN(zscore.copy(), 'drought', 'drought_knn_scale_zscore', nvalues=nvalues, dist=dist)
+        KNN(minmax.copy(), 'drought', 'drought_knn_scale_minmax', nvalues=nvalues, dist=dist)
 
 
 if __name__ == "__main__":
 
     data_drought = read_data_by_filename(FILENAME)
 
+    # TODO: WTF is this, where do they came from ??
     data_drought.drop(columns=['Unnamed: 0'], inplace=True)
     data_drought.drop(columns=['Unnamed: 0.1'], inplace=True)
 
