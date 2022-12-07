@@ -9,10 +9,6 @@ from load_data import save_new_csv
 from ds_charts import get_variable_types
 
 
-# Data should be encoded and inlcude only numeric variables!
-# strategy: mean / median 
-
-
 def get_na_distribution_dict(df):
     mv = {}
     for var in df:
@@ -23,7 +19,6 @@ def get_na_distribution_dict(df):
 
 def filling_missing_value_most_frequent(df, filename):
 
-    
     variables = get_variable_types(df)
     numeric_vars = variables['Numeric']
     symbolic_vars = variables['Symbolic']
