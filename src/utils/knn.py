@@ -4,6 +4,7 @@ from numpy import ndarray
 from pandas import DataFrame, read_csv, unique
 
 from matplotlib.pyplot import figure, savefig, show
+import matplotlib.pyplot as plt
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
@@ -12,6 +13,7 @@ from sklearn.metrics import accuracy_score
 
 sys.path.append( os.path.join(os.path.dirname(__file__)) )
 from ds_charts import plot_evaluation_results, multiple_line_chart
+from ds_charts_extensions import plot_evaluation_results_multi_label
 from general_utils import get_plot_folder_path
 
 
@@ -50,6 +52,8 @@ def KNN(df: DataFrame, target_name: str, save_file_name: str, nvalues, dist):
 
         values[d] = y_tst_values
 
+        print(y_tst_values)
+
     figure()
     multiple_line_chart(nvalues, values, title='KNN variants', xlabel='n', ylabel=str(accuracy_score), percentage=True)
     
@@ -75,10 +79,16 @@ def evaluate_knn(X_train, y_train, X_test, y_test, best):
 
     prd_trn = clf.predict(X_train)
     prd_tst = clf.predict(X_test)
-    
+
     labels = unique(y_train)
     labels.sort()
-    plot_evaluation_results(labels, y_train, prd_trn, y_test, prd_tst)
+
+    label_count = len(labels)
+
+    if label_count == 2:
+        plot_evaluation_results(labels, y_train, prd_trn, y_test, prd_tst)
+    else: 
+        plot_evaluation_results_multi_label(labels, y_train, prd_trn, y_test, prd_tst)
 
 
 def evaluate_overfitting(X_train, y_train, X_test, y_test, dist_func: str, nvalues):

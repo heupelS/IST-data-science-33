@@ -8,8 +8,10 @@ from matplotlib.pyplot import figure, savefig, show
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB, CategoricalNB
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
 
-from ds_charts import plot_evaluation_results, bar_chart
+from ds_charts import plot_evaluation_results, bar_chart, plot_confusion_matrix
+from ds_charts_extensions import plot_evaluation_results_multi_label
 
 sys.path.append( os.path.join(os.path.dirname(__file__)) )
 from general_utils import get_plot_folder_path
@@ -36,8 +38,13 @@ def NB(df: DataFrame, target_name: str, save_file_name: str):
 
     labels = unique(y_train)
     labels.sort()
+    label_count = len(labels)
 
-    plot_evaluation_results(labels, y_train, prd_trn, y_test, prd_tst)
+    if label_count == 2:
+        plot_evaluation_results(labels, y_train, prd_trn, y_test, prd_tst)
+    else: 
+        plot_evaluation_results_multi_label(labels, y_train, prd_trn, y_test, prd_tst)
+
     savefig(  os.path.join(get_plot_folder_path(), '%s_result' % save_file_name) )
 
     nb_model_comparison(X_train, y_train, X_test, y_test)
