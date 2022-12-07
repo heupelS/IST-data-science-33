@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import ndarray
-from ds_charts import plot_confusion_matrix
+from ds_charts import plot_confusion_matrix, HEIGHT
 from sklearn.metrics import confusion_matrix
 
 from matplotlib.pyplot import Axes, gca, figure, savefig, subplots, imshow, imread, axis
