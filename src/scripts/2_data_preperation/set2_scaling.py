@@ -42,9 +42,9 @@ if __name__ == "__main__":
 
     data_drought = read_data_by_filename(FILENAME)
 
-    # TODO: WTF is this, where do they came from ??
-    data_drought.drop(columns=['Unnamed: 0'], inplace=True)
-    data_drought.drop(columns=['Unnamed: 0.1'], inplace=True)
+    # TODO: WTF is this, where do they came from ?? -> I Solve this problem puting parameter Index = False on to_csv.
+    #data_drought.drop(columns=['Unnamed: 0'], inplace=True)
+    #data_drought.drop(columns=['Unnamed: 0.1'], inplace=True)
 
     # Scaling encoded data with handled missing values and outliers
     scaling(data_drought)

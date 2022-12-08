@@ -50,7 +50,7 @@ def save_new_csv(data, filename):
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
         data_path = os.path.join(path_ws,'..', 'data', filename)
-        csv = data.to_csv(data_path, index=True)
+        csv = data.to_csv(data_path, index=False)
         return csv
 
     except Exception as e:
