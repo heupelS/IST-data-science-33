@@ -67,7 +67,7 @@ def undersample_dataset(df: DataFrame, target_var: str, new_file_name: str):
     print('Majority class=', negative_class, ':', len(df_neg_sample))
     print('Proportion:', round(len(df_positives) / len(df_neg_sample), 2), ': 1')
 
-    plot_dataset_balance(df_under, target_var, '%s_oversampled'% new_file_name)
+    plot_dataset_balance(df_under, target_var, '%s_undersampled'% new_file_name)
 
 
 def oversample_dataset(df: DataFrame, target_var: str, new_file_name: str):
