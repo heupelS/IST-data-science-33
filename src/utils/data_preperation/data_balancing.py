@@ -20,7 +20,7 @@ from general_utils import get_plot_folder_path
 
 ###########################################
 ## Select if plots show up of just saved ##
-SHOW_PLOTS = True
+SHOW_PLOTS = False
 RANDOM_STATE = 42
 ###########################################
 
@@ -66,6 +66,8 @@ def undersample_dataset(df: DataFrame, target_var: str, new_file_name: str):
     print('Minority class=', positive_class, ':', len(df_positives))
     print('Majority class=', negative_class, ':', len(df_neg_sample))
     print('Proportion:', round(len(df_positives) / len(df_neg_sample), 2), ': 1')
+
+    plot_dataset_balance(df_under, target_var, '%s_oversampled'% new_file_name)
 
 
 def oversample_dataset(df: DataFrame, target_var: str, new_file_name: str):
