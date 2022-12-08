@@ -4,6 +4,9 @@ import pandas as pd
 from pandas import DataFrame
 from pandas import concat, DataFrame
 from pandas import read_csv
+from pandas import Series
+
+from imblearn.over_sampling import SMOTE
 
 from matplotlib.pyplot import figure, savefig, show
 
@@ -18,6 +21,7 @@ from general_utils import get_plot_folder_path
 ###########################################
 ## Select if plots show up of just saved ##
 SHOW_PLOTS = True
+RANDOM_STATE = 42
 ###########################################
 
 
@@ -85,9 +89,32 @@ def oversample_dataset(df: DataFrame, target_var: str, new_file_name: str):
     print('Majority class=', negative_class, ':', len(df_negatives))
     print('Proportion:', round(len(df_pos_sample) / len(df_negatives), 2), ': 1')
 
+def smote_dataset(df: DataFrame, target_var: str, new_file_name: str):
+    class_var = target_var
 
-if __name__ == "__main__":
-    diabeteic_data, _ = read_data()
-    #plot_dataset_balance(diabeteic_data, target, 'diabetic_dataset')
-    #undersample_dataset(diabeteic_data, 'readmitted', 'diabetic_dataset')
-    #oversample_dataset(diabeteic_data, 'readmitted', 'diabetic_dataset')
+    target_count = df[class_var].value_counts()
+    positive_class = target_count.idxmin()
+    negative_class = target_count.idxmax()
+
+    df_positives = df[df[class_var] == positive_class]
+    df_negatives = df[df[class_var] == negative_class]
+
+    values = {'Original': [target_count[positive_class], target_count[negative_class]]}
+    
+    smote = SMOTE(sampling_strategy='minority', random_state=RANDOM_STATE)
+    y = original.pop(class_var).values
+    X = original.values
+    smote_X, smote_y = smote.fit_resample(X, y)
+    df_smote = concat([DataFrame(smote_X), DataFrame(smote_y)], axis=1)
+    df_smote.columns = list(original.columns) + [class_var]
+
+    save_new_csv(df_smote, '%s_smoted.csv' % new_file_name)
+
+    smote_target_count = Series(smote_y).value_counts()
+
+    values['SMOTE'] = [smote_target_count[positive_class], smote_target_count[negative_class]]
+    print('Minority class=', positive_class, ':', smote_target_count[positive_class])
+    print('Majority class=', negative_class, ':', smote_target_count[negative_class])
+    print('Proportion:', round(smote_target_count[positive_class] / smote_target_count[negative_class], 2), ': 1')
+
+
