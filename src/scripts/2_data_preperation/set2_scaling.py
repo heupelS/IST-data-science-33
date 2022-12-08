@@ -15,27 +15,28 @@ from evaluation.naive_bayes import NB
 
 ###########################################
 ## Select if plots show up of just saved ##
-FILENAME = 'drought_drop_outliers.csv'
-RUN_EVALUATION = False
+FILENAME = 'drought_replace_outliers.csv'
+filename = FILENAME.split(".")[0]
+RUN_EVALUATION = True
 ###########################################
 
 
 def scaling(df):
-    zscore = std_scaler_z_score(df.copy(), 'drought', 'std_scaler_z_score.csv')
-    minmax = std_scaler_minmax(df.copy(), 'drought', 'std_scaler_z_minmax.csv')
+    zscore = std_scaler_z_score(df.copy(), 'drought', '%s_std_scaler_z_score.csv' % filename)
+    minmax = std_scaler_minmax(df.copy(), 'drought', '%s_std_scaler_z_minmax.csv' % filename)
 
-    scale_boxplot(df, zscore, minmax, 'std_scaler_comparison', False)
+    scale_boxplot(df, zscore, minmax, '%s_std_scaler_comparison'% filename, False)
 
     if RUN_EVALUATION:
 
         # Evaluation
-        NB(zscore.copy(), 'drought', 'drought_nb_scale_zscore')
-        NB(minmax.copy(), 'drought', 'drought_nb_scale_minmax')
+        NB(zscore.copy(), 'drought', '%s_nb_scale_zscore'% filename)
+        NB(minmax.copy(), 'drought', '%s_nb_scale_minmax'% filename)
         
-        predictions_dict, best = KNN(zscore.copy(), 'drought', 'drought_knn_scale_zscore')
-        knn_plot_save(zscore.copy(), 'drought', 'drought_knn_scale_zscore', predictions_dict, best)
-        predictions_dict, best = KNN(minmax.copy(), 'drought', 'drought_knn_scale_minmax')
-        knn_plot_save(minmax.copy(), 'drought', 'drought_knn_scale_minmax', predictions_dict, best)
+        predictions_dict, best = KNN(zscore.copy(), 'drought', '%s_knn_scale_zscore'% filename)
+        knn_plot_save(zscore.copy(), 'drought', '%s_knn_scale_zscore'% filename, predictions_dict, best)
+        predictions_dict, best = KNN(minmax.copy(), 'drought', '%s_knn_scale_minmax'% filename)
+        knn_plot_save(minmax.copy(), 'drought', '%s_knn_scale_minmax'% filename, predictions_dict, best)
 
 
 if __name__ == "__main__":
