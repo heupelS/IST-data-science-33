@@ -30,7 +30,7 @@ def NB(df: DataFrame, target_name: str, save_file_name: str):
     y: ndarray = df.pop(target_name).values
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=0)
     
-    for clf in [GaussianNB(),BernoulliNB(), MultinomialNB()]:
+    for clf in [GaussianNB(),BernoulliNB()]:
         clf.fit(X_train, y_train)
 
         prd_trn = clf.predict(X_train)
