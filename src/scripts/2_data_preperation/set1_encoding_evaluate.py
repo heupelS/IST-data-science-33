@@ -82,7 +82,7 @@ def concat_encoded_data(binary, symbolic, numeric):
     return final_df
 
 
-def encode_and_evaluate(df, filename):
+def encode(df, filename):
 
     change_to_categorical(df)
 
@@ -93,13 +93,18 @@ def encode_and_evaluate(df, filename):
     final_df = concat_encoded_data(binary_encoded_data, symbolic_encoded_data, numeric_data)
 
     save_new_csv(final_df, '%s.csv' % filename)
-    
+    ## IN THE FUTURE DO NOT RETURN ANYTHING AND READ FROM CSV IN OTHER FUNCTIONS 
+    # something to keep in mind is that pandas converts datatypes while saving csv and when reading a csv its a different dtype again
+    #dont think this is a problem because of the encoding earlier here.
+    return final_df
+
+def evaluate(df, filename):
     if RUN_EVALUATION:
 
         # Evaluation
-        NB(final_df.copy(), 'readmitted', '%s_nb_best_res' % filename)
-        predictions_dict, best = KNN(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename)
-        knn_plot_save(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename, predictions_dict, best)
+        NB(df.copy(), 'readmitted', '%s_nb_best_res' % filename)
+        predictions_dict, best = KNN(df.copy(), 'readmitted', '%s_knn_best_res' % filename)
+        knn_plot_save(df.copy(), 'readmitted', '%s_knn_best_res' % filename, predictions_dict, best)
 
 
 if __name__ == "__main__":
@@ -112,6 +117,9 @@ if __name__ == "__main__":
     data_diabetic_mv_filled = filling_missing_value_most_frequent(data_diabetic.copy(),'data_diabetic_mv_most_frequent.csv')
     data_diabetic_mv_deleted_rows = drop_missing_records(data_diabetic.copy(), 'data_diabetic_mv_deleted_rows.csv')
 
-    encode_and_evaluate(data_diabetic_mv_filled, 'diabetic_mv_most_frequent_encoded')
-    encode_and_evaluate(data_diabetic_mv_deleted_rows, 'diabetic_mv_deleted_rows_encoded')
+    final_df = encode(data_diabetic_mv_filled, 'diabetic_mv_most_frequent_encoded')
+    evaluate(final_df,'diabetic_mv_most_frequent_encoded')
+    
+    final_df = encode(data_diabetic_mv_deleted_rows, 'diabetic_mv_deleted_rows_encoded')
+    evaluate(final_df,'diabetic_mv_deleted_rows_encoded')  
         
