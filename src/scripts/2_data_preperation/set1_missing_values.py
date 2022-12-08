@@ -5,7 +5,7 @@ from load_data import read_data, save_new_csv, load_diabetic_data
 from ds_charts import bar_chart, get_variable_types
 from data_preperation.missing_values import *
 
-from evaluation.knn import KNN
+from evaluation.knn import KNN, knn_plot_save
 from evaluation.naive_bayes import NB
 
 import pandas as pd
@@ -98,7 +98,8 @@ def encode_and_evaluate(df, filename):
 
         # Evaluation
         NB(final_df.copy(), 'readmitted', '%s_nb_best_res' % filename)
-        KNN(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename)
+        predictions_dict, best = KNN(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename)
+        knn_plot_save(final_df.copy(), 'readmitted', '%s_knn_best_res' % filename, predictions_dict, best)
 
 
 if __name__ == "__main__":

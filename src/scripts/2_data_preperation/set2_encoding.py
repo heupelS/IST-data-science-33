@@ -8,7 +8,7 @@ import numpy as np
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_data, save_new_csv
 
-from evaluation.knn import KNN
+from evaluation.knn import KNN, knn_plot_save
 from evaluation.naive_bayes import NB
 
 
@@ -43,4 +43,6 @@ if __name__ == "__main__":
 
         # Evaluation
         NB(data_drought.copy(), 'drought', 'drought_nb_best_res')
-        KNN(data_drought.copy(), 'drought', 'drought_knn_best_res')
+        predictions_dict, best = KNN(data_drought.copy(), 'drought', 'drought_knn_best_res')
+        knn_plot_save(data_drought.copy(), 'drought', 'drought_knn_best_res', predictions_dict, best)
+

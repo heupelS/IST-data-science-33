@@ -9,7 +9,7 @@ from load_data import read_data_by_filename, save_new_csv
 
 from data_preperation.scaling import std_scaler_z_score, std_scaler_minmax, scale_boxplot
 
-from evaluation.knn import KNN
+from evaluation.knn import KNN, knn_plot_save
 from evaluation.naive_bayes import NB
 
 
@@ -32,8 +32,10 @@ def scaling(df):
         NB(zscore.copy(), 'drought', 'drought_nb_scale_zscore')
         NB(minmax.copy(), 'drought', 'drought_nb_scale_minmax')
         
-        KNN(zscore.copy(), 'drought', 'drought_knn_scale_zscore')
-        KNN(minmax.copy(), 'drought', 'drought_knn_scale_minmax')
+        predictions_dict, best = KNN(zscore.copy(), 'drought', 'drought_knn_scale_zscore')
+        knn_plot_save(zscore.copy(), 'drought', 'drought_knn_scale_zscore', predictions_dict, best)
+        predictions_dict, best = KNN(minmax.copy(), 'drought', 'drought_knn_scale_minmax')
+        knn_plot_save(minmax.copy(), 'drought', 'drought_knn_scale_minmax', predictions_dict, best)
 
 
 if __name__ == "__main__":

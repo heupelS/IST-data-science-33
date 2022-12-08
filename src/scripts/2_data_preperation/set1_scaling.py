@@ -11,7 +11,7 @@ from data_preperation.scaling import std_scaler_z_score, std_scaler_minmax, scal
 
 from data_preperation.outlier_handling import replace_outliers, drop_outliers, truncate_outliers
 
-from evaluation.knn import KNN
+from evaluation.knn import KNN, knn_plot_save
 from evaluation.naive_bayes import NB
 
 
@@ -35,8 +35,10 @@ def scaling(df):
         NB(zscore.copy(), 'readmitted', 'diabetic_nb_scale_zscore')
         NB(minmax.copy(), 'readmitted', 'diabetic_nb_scale_minmax')
         
-        KNN(zscore.copy(), 'readmitted', 'diabetic_knn_scale_zscore')
-        KNN(minmax.copy(), 'readmitted', 'diabetic_knn_scale_minmax')
+        predictions_dict, best = KNN(zscore.copy(), 'readmitted', 'diabetic_knn_scale_zscore')
+        knn_plot_save(zscore.copy(), 'readmitted', 'diabetic_knn_scale_zscore', predictions_dict, best)
+        predictions_dict, best = KNN(minmax.copy(), 'readmitted', 'diabetic_knn_scale_minmax')
+        knn_plot_save(minmax.copy(), 'readmitted', 'diabetic_knn_scale_minmax', predictions_dict, best)
 
 
 def handle_outliers(data):
