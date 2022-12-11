@@ -62,5 +62,7 @@ def drop_missing_values_cols(df, filename):
     df = df.drop(columns=missings, inplace=False)
 
     save_new_csv(df, filename)
+    print(df.shape)
     print('Dropped variables', missings)
+    return df
 
