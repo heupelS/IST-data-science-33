@@ -5,6 +5,8 @@ from pandas import DataFrame
 from pandas import concat, DataFrame
 from pandas import read_csv
 from pandas import Series
+from imblearn.over_sampling import RandomOverSampler
+from imblearn.under_sampling import RandomUnderSampler
 
 from imblearn.over_sampling import SMOTE
 
@@ -120,3 +122,22 @@ def smote_dataset(df: DataFrame, target_var: str, new_file_name: str):
     print('Proportion:', round(smote_target_count[positive_class] / smote_target_count[negative_class], 2), ': 1')
 
 
+def random_undersample_dataset(df: DataFrame, target_var: str, new_file_name: str):
+    print('Class variables started at:', df[target_var].value_counts())
+    target = df.pop(target_var)
+    ros = RandomUnderSampler(random_state=0)
+    x, y = ros.fit_resample(df, target)
+    df_under = concat([x,y], axis = 1)
+    print('Class variables undersampled to:', df_under[target_var].value_counts())
+    save_new_csv(df_under, '%s_undersampled.csv' % new_file_name)
+    return df_under
+
+def random_oversample_dataset(df: DataFrame, target_var: str, new_file_name: str):
+    print('Class variables started at:', df[target_var].value_counts())
+    target = df.pop(target_var)
+    ros = RandomOverSampler(random_state=0)
+    x, y = ros.fit_resample(df, target)
+    df_over = concat([x,y], axis = 1)
+    print('Class variables oversampled to:', df_over[target_var].value_counts())
+    save_new_csv(df_over, '%s_undersampled.csv' % new_file_name)
+    return df_over
