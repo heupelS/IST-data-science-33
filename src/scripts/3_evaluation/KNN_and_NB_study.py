@@ -11,7 +11,7 @@ from evaluation.naive_bayes import NB
 
 ###########################################
 ## Select if plots show up of just saved ##
-FILENAME = 'drought_dataset_undersampled.csv'
+FILENAME = 'diabetic_dataset_undersampled.csv'
 main_name =FILENAME.split("_")[0]
 filename = FILENAME.split(".")[0]
 ###########################################
