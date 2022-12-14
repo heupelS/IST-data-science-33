@@ -20,7 +20,7 @@ def load_drought_data():
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
         data_path = os.path.join(path_ws,'..', 'data','drought.csv')
-        csv = pd.read_csv(data_path, parse_dates=['date'])
+        csv = pd.read_csv(data_path, parse_dates=['date'], dayfirst=True)
         return csv
 
     except Exception as e:

@@ -23,8 +23,8 @@ def balancing_dataset(data, target):
     # its is important create functions that deal with ternary variables too in > data_preparation > data_balancing
 
     undersample_dataset(data, target, filename)
-    #oversample_dataset(data, target, filename)
-    #smote_dataset(data, target, filename)
+    oversample_dataset(data, target, filename)
+    smote_dataset(data, target, filename)
 
 
 if __name__ == "__main__":
