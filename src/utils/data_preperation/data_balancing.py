@@ -31,7 +31,7 @@ def plot_dataset_balance(df: DataFrame, target_var: str, save_file_name: str):
     class_var = target_var
     target_count = df[class_var].value_counts()
     print("Target Count:",target_count)
-
+    # Natan here
     majority_class = target_count.idxmax()
     #print("Majority_class:", majority_class)
     #ind_positive_class = target_count.index.get_loc(positive_class)
