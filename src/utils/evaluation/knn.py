@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 
-sys.path.append( os.path.join(os.path.dirname(__file__)) )
+sys.path.append( os.path.join(os.path.dirname(__file__),'..') )
 from ds_charts import plot_evaluation_results, multiple_line_chart
 from ds_charts_extensions import plot_evaluation_results_multi_label
 from general_utils import get_plot_folder_path

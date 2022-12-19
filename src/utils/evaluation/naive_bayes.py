@@ -10,10 +10,11 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB, Categori
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 
+
+
+sys.path.append( os.path.join(os.path.dirname(__file__),'..') )
 from ds_charts import plot_evaluation_results, bar_chart, plot_confusion_matrix,multiple_bar_chart
 from ds_charts_extensions import plot_evaluation_results_multi_label
-
-sys.path.append( os.path.join(os.path.dirname(__file__)) )
 from general_utils import get_plot_folder_path
 
 
