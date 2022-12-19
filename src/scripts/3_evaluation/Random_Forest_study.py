@@ -18,7 +18,7 @@ filename = FILENAME.split(".")[0]
 
 def evaluating_dataset(data,target):
 
-    Random_Forest(data.copy(), target, '{filename}_DT')
+    Random_Forest(data.copy(), target, f'{filename}_RF')
 
 
 if __name__ == "__main__":
