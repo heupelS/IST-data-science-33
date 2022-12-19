@@ -22,7 +22,7 @@ SHOW_PLOTS = False
 
 def Random_Forest(df: DataFrame, target: str, save_file_name: str):
     print('Model Random Forest')
-    y: ndarray = df.pop(target).values
+    y = df.pop(target).values
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=0)
     labels = unique(y_train)
     labels.sort()
