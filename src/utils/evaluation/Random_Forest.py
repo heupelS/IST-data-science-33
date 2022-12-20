@@ -22,7 +22,7 @@ SHOW_PLOTS = False
 
 def Random_Forest(df: DataFrame, target: str, save_file_name: str):
     print('Model Random Forest')
-    y = df.pop(target).values
+    y: ndarray = df.pop(target).values
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=0)
     labels = unique(y_train)
     labels.sort()
@@ -55,13 +55,13 @@ def Random_Forest(df: DataFrame, target: str, save_file_name: str):
             values[f] = yvalues
         multiple_line_chart(n_estimators, values, ax=axs[0, k], title=f'Random Forests with max_depth={d}',
                             xlabel='nr estimators', ylabel='accuracy', percentage=True)
-    savefig(  os.path.join(get_plot_folder_path(), '%s_study'%save_file_name) )
+    savefig(  os.path.join(get_plot_folder_path(), f'{save_file_name}_study') )
     
     print('Best results with depth=%d, %1.2f features and %d estimators, with accuracy=%1.2f'%(best[0], best[1], best[2], last_best))
 
     evaluate_RF(df, save_file_name, labels, best_model, X_train, X_test, y_train, y_test)
-    plot_feature_importance(df, save_file_name, labels, best_model)
-    overfitting_study_rf(df, save_file_name, X_train, X_test, y_train, y_test, n_estimators)
+    plot_feature_importance(df, save_file_name, best_model)
+    overfitting_study_rf(df, save_file_name, X_train, X_test, y_train, y_test, n_estimators, best[0], best[1])
 
     if SHOW_PLOTS:
         show()
@@ -70,7 +70,7 @@ def evaluate_RF(df: DataFrame, save_file_name: str, labels, best_model, X_train,
     prd_trn = best_model.predict(X_train)
     prd_tst = best_model.predict(X_test)
     plot_evaluation_results(labels, y_train, prd_trn, y_test, prd_tst)
-    savefig(  os.path.join(get_plot_folder_path(), '{save_file_name}_rf_best') )
+    savefig(  os.path.join(get_plot_folder_path(), f'{save_file_name}_best_rf') )
 
 def plot_feature_importance(df: DataFrame, save_file_name: str, best_model):
     variables = df.columns
@@ -84,20 +84,18 @@ def plot_feature_importance(df: DataFrame, save_file_name: str, best_model):
 
     figure()
     horizontal_bar_chart(elems, importances[indices], stdevs[indices], title='Random Forest Features importance', xlabel='importance', ylabel='variables')
-    savefig(  os.path.join(get_plot_folder_path(), '{save_file_name}_rf_ranking') )
+    savefig(  os.path.join(get_plot_folder_path(), f'{save_file_name}_rf_ranking') )
 
-def overfitting_study_rf(df: DataFrame, save_file_name: str, X_train, X_test, y_train, y_test, n_estimators):
-    f = 0.7
-    max_depth = 10
+def overfitting_study_rf(df: DataFrame, save_file_name: str, X_train, X_test, y_train, y_test, n_estimators, max_depth, features_pct):
     eval_metric = accuracy_score
     y_tst_values = []
     y_trn_values = []
     for n in n_estimators:
-        rf = RandomForestClassifier(n_estimators=n, max_depth=d, max_features=f)
+        rf = RandomForestClassifier(n_estimators=n, max_depth=max_depth, max_features=features_pct)
         rf.fit(X_train, y_train)
         prd_tst_Y = rf.predict(X_test)
         prd_trn_Y = rf.predict(X_train)
         y_tst_values.append(eval_metric(y_test, prd_tst_Y))
         y_trn_values.append(eval_metric(y_train, prd_trn_Y))
-    plot_overfitting_study(n_estimators, y_trn_values, y_tst_values, name=f'RF_depth={max_depth}_vars={f}', xlabel='nr_estimators', ylabel=str(eval_metric))
-    savefig(  os.path.join(get_plot_folder_path(), '{save_file_name}_best_overfitting') )
+    plot_overfitting_study(n_estimators, y_trn_values, y_tst_values, name=f'RF_depth={max_depth}_vars={features_pct}', xlabel='nr_estimators', ylabel=str(eval_metric))
+    savefig(  os.path.join(get_plot_folder_path(), f'{save_file_name}_best_overfitting') )
