@@ -87,7 +87,6 @@ def evaluate_DT(df: DataFrame, save_file_name: str, labels, best_model, X_train,
     
     prd_trn = best_model.predict(X_train)
     prd_tst = best_model.predict(X_test)
-    plot_evaluation_results(labels, y_train, prd_trn, y_test, prd_tst)
 
     label_count = len(labels)
 
