@@ -10,9 +10,10 @@ from sklearn.metrics import accuracy_score
 from numpy import std, argsort, ndarray
 
 sys.path.append( os.path.join(os.path.dirname(__file__),'..') )
-from ds_charts import plot_evaluation_results, multiple_line_chart
+from ds_charts import multiple_line_chart
 from ds_charts import horizontal_bar_chart
 from ds_charts import plot_overfitting_study
+from ds_charts_extensions import plot_evaluation_results_multi_label
 from general_utils import get_plot_folder_path
 
 ###########################################
@@ -71,7 +72,7 @@ def Random_Forest(df: DataFrame, target: str, save_file_name: str):
 def evaluate_RF(df: DataFrame, save_file_name: str, labels, best_model, X_train, X_test, y_train, y_test):
     prd_trn = best_model.predict(X_train)
     prd_tst = best_model.predict(X_test)
-    plot_evaluation_results(labels, y_train, prd_trn, y_test, prd_tst)
+    plot_evaluation_results_multi_label(labels, y_train, prd_trn, y_test, prd_tst)
     savefig(  os.path.join(get_plot_folder_path(), f'{save_file_name}_best_rf') )
 
 def plot_feature_importance(df: DataFrame, save_file_name: str, best_model):
