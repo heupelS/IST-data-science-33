@@ -7,11 +7,11 @@ sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_data_by_filename, save_new_csv
 
 from evaluation.Decision_tree_natan import DT
-from evaluation.Random_fores_natan import RF
+from evaluation.Random_forest_natan import RF
 
 ###########################################
 ## Select if plots show up of just saved ##
-FILENAME = 'diabetic_dataset_oversampled.csv'
+FILENAME = 'drought_dataset_undersampled.csv'
 main_name =FILENAME.split("_")[0]
 filename = FILENAME.split(".")[0]
 ###########################################

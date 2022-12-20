@@ -81,7 +81,7 @@ def plot_tree(df: DataFrame, save_file_name: str, labels, best_model):
 
     labels = [str(value) for value in labels]
     tree.plot_tree(best_model, feature_names=df.columns, class_names=labels)
-    savefig(  os.path.join(get_plot_folder_path(), '%s_best_tree'%save_file_name) )
+    savefig(  os.path.join(get_plot_folder_path(), '%s_best_tree'%save_file_name), dpi=900 )
 
 def evaluate_DT(df: DataFrame, save_file_name: str, labels, best_model, X_train, X_test, y_train, y_test):
     
