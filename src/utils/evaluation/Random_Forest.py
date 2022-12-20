@@ -60,8 +60,10 @@ def Random_Forest(df: DataFrame, target: str, save_file_name: str):
     print('Best results with depth=%d, %1.2f features and %d estimators, with accuracy=%1.2f'%(best[0], best[1], best[2], last_best))
 
     evaluate_RF(df, save_file_name, labels, best_model, X_train, X_test, y_train, y_test)
+    print('Plotting')
     plot_feature_importance(df, save_file_name, best_model)
-    overfitting_study_rf(df, save_file_name, X_train, X_test, y_train, y_test, n_estimators, best[0], best[1])
+    print('Overfitting')
+    #overfitting_study_rf(df, save_file_name, X_train, X_test, y_train, y_test, n_estimators, best[0], best[1])
 
     if SHOW_PLOTS:
         show()

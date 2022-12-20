@@ -10,7 +10,7 @@ from evaluation.Random_Forest import Random_Forest
 
 ###########################################
 ## Select if plots show up of just saved ##
-FILENAME = 'drought_dataset_undersampled.csv'
+FILENAME = 'diabetic_dataset_oversampled.csv'
 main_name =FILENAME.split("_")[0]
 filename = FILENAME.split(".")[0]
 ###########################################
