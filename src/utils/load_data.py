@@ -30,6 +30,18 @@ def read_data():
     return load_diabetic_data(), load_drought_data()
 
 
+def read_time_series_by_filename(filename, index_col):
+    try:
+        path_ws = os.path.dirname(os.path.abspath(__file__))
+        data_path = os.path.join(path_ws,'..', 'data', filename)
+        csv = pd.read_csv(data_path, \
+            index_col=index_col, sep=',', decimal='.', parse_dates=True, infer_datetime_format=True)
+        return csv
+
+    except Exception as e:
+        print(e)
+
+
 def read_data_by_filename(filename):
     try:
         path_ws = os.path.dirname(os.path.abspath(__file__))
