@@ -5,8 +5,8 @@ from load_data import read_time_series_by_filename, save_new_csv
 
 from data_profiling.granuality import data_granularity
 
-from time_series.ts_profiling import aggregate_multi, box_plot, var_distribution, data_stationary
-from time_series.ts_transformation import smoothing, differention
+from time_series.ts_profiling import  box_plot, var_distribution, data_stationary
+from time_series.ts_transformation import smoothing, differention, aggregate_multi
 from time_series.ts_forecasting import forecast
 
 
@@ -52,8 +52,8 @@ def set1_forecast(data_set1):
 if __name__ == '__main__':
     data_set1 = final_set_forecasting_glucose()
 
-    # set1_profiling(data_set1)
-    # set1_transformation(data_set1)
+    set1_profiling(data_set1)
+    set1_transformation(data_set1)
     set1_forecast(data_set1)
 
     

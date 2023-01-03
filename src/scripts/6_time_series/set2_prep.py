@@ -5,8 +5,8 @@ from load_data import read_time_series_by_filename, save_new_csv
 
 from data_profiling.granuality import data_granularity
 
-from time_series.ts_profiling import aggregate_multi, box_plot, var_distribution, data_stationary
-from time_series.ts_transformation import smoothing, differention
+from time_series.ts_profiling import box_plot, var_distribution, data_stationary
+from time_series.ts_transformation import smoothing, differention, aggregate_multi
 from time_series.ts_forecasting import forecast
 
 def final_set_forecasting_drought():
