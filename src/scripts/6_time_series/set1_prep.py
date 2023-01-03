@@ -7,8 +7,8 @@ from data_profiling.granuality import data_granularity
 
 from time_series.ts_profiling import  box_plot, var_distribution, data_stationary
 from time_series.ts_transformation import plot_smoothing, plot_differention, plot_aggregate_multi
-from time_series.ts_transformation import smoothing, differention, aggregate_multi
-from time_series.ts_forecasting import forecast, plot_forecasting, calculate_fc_with_plot
+
+from set_procedures import set_forecast
 
 
 def final_set_forecasting_glucose():
@@ -46,14 +46,15 @@ def set1_transformation(data_set1):
 
 
 def set1_forecast(data_set1):
-    
-    calculate_fc_with_plot(data_set1.copy(),'Glucose', 'Date', 'Glucose_without_tf')
 
-    df_sm = smoothing(data_set1.copy(), 100)
-    df_diff = differention(data_set1.copy())
+    show_in_plots = ['Glucose']
+    target = 'Glucose' 
+    target_index = 'Date' 
+    agg_types = ['H', 'D', 'W', 'M', 'Q']
+    win_sizes = [10, 20, 50, 100]
+    filename = 'glucose'
 
-    # calculate_fc_with_plot(df_sm.copy())
-    # forecast(df_diff, 'Glucose', 'Date', 'Glucose_diff')
+    set_forecast(data_set1, target, target_index, agg_types, win_sizes, show_in_plots, filename)
 
 
 if __name__ == '__main__':

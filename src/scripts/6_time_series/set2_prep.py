@@ -7,7 +7,9 @@ from data_profiling.granuality import data_granularity
 
 from time_series.ts_profiling import box_plot, var_distribution, data_stationary
 from time_series.ts_transformation import plot_smoothing, plot_differention, plot_aggregate_multi
-from time_series.ts_forecasting import forecast
+
+from set_procedures import set_forecast
+
 
 def final_set_forecasting_drought():
     data_set2 = read_time_series_by_filename('drought.forecasting_dataset.csv', 'date')
@@ -44,11 +46,24 @@ def set2_transformation(data_set2):
     plot_differention(data_set2.copy(), targets, 'glucose', 100, 'Date', 'Consumption')
 
 
+def set2_forecast(data_set2):
+
+    show_in_plots = ['QV2M']
+    target = 'QV2M' 
+    target_index = 'date' 
+    agg_types = ['H', 'D', 'W', 'M', 'Q']
+    win_sizes = [10, 20, 50, 100]
+    filename = 'drought'
+
+    set_forecast(data_set2, target, target_index, agg_types, win_sizes, show_in_plots, filename)
+
+
 if __name__ == '__main__':
     data_set2 = final_set_forecasting_drought()
 
     set2_profiling(data_set2)
     set2_transformation(data_set2)
+    set2_forecast(data_set2)
    
 
 
