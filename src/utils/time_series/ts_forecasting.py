@@ -1,6 +1,7 @@
 import sys, os
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..') )
+sys.path.append( os.path.join(os.path.dirname(__file__)) )
 from general_utils import get_plot_folder_path
 
 import pandas as pd
@@ -11,18 +12,7 @@ from matplotlib.pyplot import figure, xticks, savefig, subplots, show
 from sklearn.base import RegressorMixin
 from ts_functions import PREDICTION_MEASURES, plot_evaluation_results, plot_forecasting_series
 
-
-class SimpleAvgRegressor (RegressorMixin):
-    def __init__(self):
-        super().__init__()
-        self.mean = 0
-
-    def fit(self, X: DataFrame):
-        self.mean = X.mean()
-
-    def predict(self, X: DataFrame):
-        prd =  len(X) * [self.mean]
-        return prd
+from regressor import SimpleAvgRegressor, PersistenceRegressor, RollingMeanRegressor
 
 
 def split_dataframe(data, trn_pct=0.70):
@@ -33,11 +23,20 @@ def split_dataframe(data, trn_pct=0.70):
     return train, test
 
 
-def forecast(data, target, index_target, name, measure='R2', flag_pct=False):
+# Select regressor from [simple_avg, persistence, rolling_mean]
+def forecast(data, target, index_target, name, variant='simple_avg', measure='R2', flag_pct=False):
 
     train, test = split_dataframe(data, trn_pct=0.75)
 
-    fr_mod = SimpleAvgRegressor()
+    if variant == 'simple_avg':
+        fr_mod = SimpleAvgRegressor()
+    elif variant == 'rolling_mean':
+        fr_mod = RollingMeanRegressor()
+    elif variant == 'persistence':
+        fr_mod = PersistenceRegressor()
+    else: 
+        raise Exception("Unknown regressor! Please choose from: [simple_avg, persistence, rolling_mean]")
+
     fr_mod.fit(train)
     prd_trn = fr_mod.predict(train)
     prd_tst = fr_mod.predict(test)
@@ -51,19 +50,20 @@ def forecast(data, target, index_target, name, measure='R2', flag_pct=False):
 def plot_forecasting(train, test, prd_trn, prd_tst, target, index_target, name):
 
     plot_evaluation_results(train.values, prd_trn, test.values, prd_tst, 
-        f'{name}_forecast_simpleAvg_plot.png')
+        f'{name}_forecast_plot.png')
 
-    savefig(  os.path.join(get_plot_folder_path(), f'{name}_forecast_simpleAvg_plot' ) )
+    savefig(  os.path.join(get_plot_folder_path(), f'{name}_forecast_plot' ) )
 
     plot_forecasting_series(train, test, prd_trn, prd_tst, 
-        f'{name}_forecast_simpleAvg_eval.png', 
+        f'{name}_forecast_eval.png', 
         x_label=index_target, y_label=target)
 
-    savefig( os.path.join(get_plot_folder_path(), f'{name}_forecast_simpleAvg_eval' ) )
+    savefig( os.path.join(get_plot_folder_path(), f'{name}_forecast_eval' ) )
 
 
-def calculate_fc_with_plot(data, target, index_target, name, measure='R2', flag_pct=False):
-    train, test, prd_trn, prd_tst = forecast(data, target, index_target, name, measure=measure, flag_pct=flag_pct)
+def calculate_fc_with_plot(data, target, index_target, name, variant='simple_avg', measure='R2', flag_pct=False):
+    train, test, prd_trn, prd_tst = forecast(data, target, index_target, name, 
+        variant=variant, measure=measure, flag_pct=flag_pct)
 
     plot_forecasting(
-        train, test, prd_trn, prd_tst, target, index_target, name,)
+        train, test, prd_trn, prd_tst, target, index_target, f'fc_{name}_{variant}')
