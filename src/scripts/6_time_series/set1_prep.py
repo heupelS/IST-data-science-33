@@ -51,7 +51,7 @@ def set1_forecast(data_set1):
     target = 'Glucose' 
     target_index = 'Date' 
     agg_types = ['H', 'D', 'W', 'M', 'Q']
-    win_sizes = [10, 20, 50, 100]
+    win_sizes = [1, 5, 7, 10, 15, 20, 30, 50, 75, 100, 200]
     filename = 'glucose'
 
     set_forecast(data_set1, target, target_index, agg_types, win_sizes, show_in_plots, filename)
