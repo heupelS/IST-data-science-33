@@ -30,6 +30,7 @@ def set1_profiling(data_set1):
             index_multi='Date', 
             targets=targets, 
             name='glucose', 
+            save_plot=True,
             y_label='Consumption')
 
 
@@ -41,8 +42,8 @@ def set1_profiling(data_set1):
 def set1_transformation(data_set1):
     targets = ['Glucose', 'Insulin']
 
-    smoothing(data_set1.copy(), targets, 'glucose', 100, 'Date', 'Consumption')
-    differention(data_set1.copy(), targets, 'glucose', 100, 'Date', 'Consumption')
+    smoothing(data_set1.copy(), targets, 'glucose', 100, save_plot=True, x_label='Date', y_label='Consumption')
+    differention(data_set1.copy(), targets, 'glucose', save_plot=True, x_label='Date', y_label='Consumption')
 
 
 def set1_forecast(data_set1):
