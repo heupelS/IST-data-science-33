@@ -2,7 +2,6 @@ import sys, os
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..') )
 from general_utils import get_plot_folder_path
-from load_data import read_data
 
 from ts_functions import plot_series, HEIGHT
 
