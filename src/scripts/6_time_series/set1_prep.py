@@ -52,8 +52,8 @@ def set1_forecast(data_set1):
 if __name__ == '__main__':
     data_set1 = final_set_forecasting_glucose()
 
-    set1_profiling(data_set1)
-    set1_transformation(data_set1)
+    # set1_profiling(data_set1)
+    # set1_transformation(data_set1)
     set1_forecast(data_set1)
 
     
