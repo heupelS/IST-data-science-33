@@ -5,7 +5,7 @@ from load_data import read_time_series_by_filename, save_new_csv
 
 from data_preperation.missing_values import drop_missing_values_cols
 from data_profiling.granuality import data_granularity
-from time_series.aggregation import aggregate_multi
+from time_series.ts_profiling import aggregate_multi, box_plot, var_distribution, data_stationary
 
 def final_set_forecasting_glucose():
     data_set1 = read_time_series_by_filename('glucose.csv', 'Date')
@@ -19,7 +19,7 @@ if __name__ == '__main__':
     data_granularity(data_set1, 'glucose_gran', 'Numeric')
 
     targets = ['Glucose', 'Insulin']
-    agg_types = ['D', 'W', 'M']
+    agg_types = ['H', 'D', 'W', 'M', 'Q']
 
     for agg in agg_types:
         aggregate_multi(
@@ -29,6 +29,11 @@ if __name__ == '__main__':
             targets=targets, 
             name='glucose', 
             y_label='Consumption')
+
+
+    box_plot(data_set1, 'Date', 'glucose')
+    var_distribution(data_set1, 'Date', 'glucose')
+    data_stationary(data_set1, 'Glucose', 'glucose')
 
     
 

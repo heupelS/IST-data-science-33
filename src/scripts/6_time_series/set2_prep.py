@@ -6,7 +6,8 @@ from load_data import read_time_series_by_filename, save_new_csv
 from data_preperation.outlier_handling import drop_outliers
 from data_preperation.scaling import std_scaler_minmax
 from data_profiling.granuality import data_granularity
-from time_series.aggregation import aggregate_multi
+from time_series.ts_profiling import aggregate_multi, box_plot, var_distribution, data_stationary
+
 
 def final_set_forecasting_drought():
     data_set2 = read_time_series_by_filename('drought.forecasting_dataset.csv', 'date')
@@ -20,7 +21,8 @@ if __name__ == '__main__':
     data_granularity(data_set2, 'drought_gran', 'Numeric')
 
     targets = ['PRECTOT', 'PS', 'T2M', 'T2MDEW', 'T2MWET', 'TS', 'QV2M']
-    agg_types = ['D', 'W', 'M']
+    # targets = ['QV2M']
+    agg_types = ['S', 'H', 'D', 'W', 'M', 'Q']
 
     for agg in agg_types:
         aggregate_multi(
@@ -30,7 +32,10 @@ if __name__ == '__main__':
             targets=targets, 
             name='drought', 
             y_label='Consumption')
-
     
+    box_plot(data_set2, 'date', 'drought')
+    var_distribution(data_set2, 'date', 'drought')
+    data_stationary(data_set2, 'QV2M', 'drought')
+
 
 
