@@ -44,7 +44,12 @@ def forecast(data, target, index_target, name, measure='R2', flag_pct=False):
 
     eval_results = {}
     eval_results['SimpleAvg'] = PREDICTION_MEASURES[measure](test.values, prd_tst)
-    
+
+    return train, test, prd_trn, prd_tst
+
+
+def plot_forecasting(train, test, prd_trn, prd_tst, target, index_target, name):
+
     plot_evaluation_results(train.values, prd_trn, test.values, prd_tst, 
         f'{name}_forecast_simpleAvg_plot.png')
 
@@ -54,4 +59,11 @@ def forecast(data, target, index_target, name, measure='R2', flag_pct=False):
         f'{name}_forecast_simpleAvg_eval.png', 
         x_label=index_target, y_label=target)
 
-    savefig(  os.path.join(get_plot_folder_path(), f'{name}_forecast_simpleAvg_eval' ) )
+    savefig( os.path.join(get_plot_folder_path(), f'{name}_forecast_simpleAvg_eval' ) )
+
+
+def calculate_fc_with_plot(data, target, index_target, name, measure='R2', flag_pct=False):
+    train, test, prd_trn, prd_tst = forecast(data, target, index_target, name, measure=measure, flag_pct=flag_pct)
+
+    plot_forecasting(
+        train, test, prd_trn, prd_tst, target, index_target, name,)
