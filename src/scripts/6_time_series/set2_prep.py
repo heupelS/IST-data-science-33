@@ -4,6 +4,7 @@ sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_time_series_by_filename, save_new_csv
 
 from data_profiling.granuality import data_granularity
+from data_profiling.dimensionality import plot_dim
 
 from time_series.ts_profiling import box_plot, var_distribution, data_stationary
 from time_series.ts_transformation import plot_smoothing, plot_differention, plot_aggregate_multi
@@ -15,6 +16,9 @@ def final_set_forecasting_drought():
     data_set2 = read_time_series_by_filename('drought.forecasting_dataset.csv', 'date')
     data_set2_dropna = data_set2.dropna(axis=0)
     data_set2_sorted = data_set2_dropna.sort_values(by=['date'])
+
+    plot_dim(data_set2_sorted, 'drought')
+
     return data_set2_sorted
 
 
@@ -53,7 +57,7 @@ def set2_forecast(data_set2):
     target = 'QV2M' 
     target_index = 'date' 
     agg_types = ['D', 'W', 'M']
-    win_sizes = [10, 20, 50, 100]
+    win_sizes = [10, 20, 50, 60, 70, 80, 90, 100, 200]
     filename = 'drought'
 
     variant = 'persistence'
@@ -66,11 +70,11 @@ def set2_forecast(data_set2):
     agg_forecast(data_set2, target, target_index, agg_types, show_in_plots, filename, 
       variant=variant)
 
-    best_agg = 'H'
+    best_agg = 'M'
     smoothing_forecast(data_set2, target, target_index, best_agg, win_sizes, show_in_plots, filename, 
       variant=variant)
 
-    best_win = 20
+    best_win = 60
     derivative = 2
     diff_forecast(data_set2, target, target_index, best_agg, best_win, show_in_plots, filename, 
         derivative=derivative, variant=variant)

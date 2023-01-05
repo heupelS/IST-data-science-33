@@ -101,7 +101,7 @@ def smoothing_forecast(
 
     # Test all window sizes
     for ws in win_sizes:
-        df_sm = smoothing(data_set.copy(), ws)
+        df_sm = smoothing(df_agg.copy(), ws)
         df_sm = df_sm.dropna(axis=0)
         calculate_fc_with_plot(df_sm.copy()[show_in_plots], target_var, target_index, 
             f'{name}_sm_win_{ws}', variant='persistence')
