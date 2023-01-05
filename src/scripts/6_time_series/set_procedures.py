@@ -25,25 +25,27 @@ def set_forecast(
     aggregates: list,
     win_sizes: list,
     show_in_plots: list, 
-    name: str
+    name: str, 
+    test_regressor: bool=False
     ):
 
-    # Test all regressor
-    calculate_fc_with_plot(data_set.copy()[show_in_plots], 
-        target_var, target_index, f'{name}_without_tf', 'simple_avg')
+    if test_regressor:
+        # Test all regressor
+        calculate_fc_with_plot(data_set.copy()[show_in_plots], 
+            target_var, target_index, f'{name}_without_tf', 'simple_avg')
 
-    calculate_fc_with_plot(data_set.copy()[show_in_plots], 
-        target_var, target_index, f'{name}_without_tf', 'persistence')
+        calculate_fc_with_plot(data_set.copy()[show_in_plots], 
+            target_var, target_index, f'{name}_without_tf', 'persistence')
 
-    calculate_fc_with_plot(data_set.copy()[show_in_plots], 
-        target_var, target_index, f'{name}_without_tf', 'rolling_mean')
+        calculate_fc_with_plot(data_set.copy()[show_in_plots], 
+            target_var, target_index, f'{name}_without_tf', 'rolling_mean')
 
     # Test all aggregation methods
     for agg in aggregates:
         df_agg = aggregate_multi(data_set.copy(), target_index, agg)
         df_agg = df_agg.dropna(axis=0)
         calculate_fc_with_plot(df_agg.copy()[show_in_plots], target_var, target_index, 
-            f'{name}_agg_{agg}')
+            f'{name}_agg_{agg}', variant='persistence')
 
     # Test all window sizes
     for ws in win_sizes:
