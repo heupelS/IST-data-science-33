@@ -66,9 +66,3 @@ def calculate_fc_with_plot(data, target, index_target, name, variant='simple_avg
     plot_forecasting(
         train, test, prd_trn, prd_tst, target, index_target, f'fc_{name}_{variant}')
 
-
-def arima_forecast():
-    pred = ARIMA(train, order=(2, 0, 2))
-    model = pred.fit(method_kwargs={'warn_convergence': False})
-    model.plot_diagnostics(figsize=(2*HEIGHT, 2*HEIGHT))
-
