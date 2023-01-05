@@ -8,7 +8,7 @@ from data_profiling.granuality import data_granularity
 from time_series.ts_profiling import box_plot, var_distribution, data_stationary
 from time_series.ts_transformation import plot_smoothing, plot_differention, plot_aggregate_multi
 
-from set_procedures import set_forecast
+from set_procedures import set_forecast, agg_forecast, smoothing_forecast, diff_forecast
 
 
 def final_set_forecasting_drought():
@@ -22,7 +22,8 @@ def set2_profiling(data_set2):
 
     data_granularity(data_set2, 'drought_gran', 'Numeric')
 
-    targets = ['PRECTOT', 'PS', 'T2M', 'T2MDEW', 'T2MWET', 'TS', 'QV2M']
+    # targets = ['PRECTOT', 'PS', 'T2M', 'T2MDEW', 'T2MWET', 'TS', 'QV2M']
+    targets = ['QV2M']
     agg_types = ['S', 'H', 'D', 'W', 'M', 'Q']
 
     for agg in agg_types:
@@ -51,18 +52,34 @@ def set2_forecast(data_set2):
     show_in_plots = ['QV2M']
     target = 'QV2M' 
     target_index = 'date' 
-    agg_types = ['H', 'D', 'W', 'M', 'Q']
+    agg_types = ['D', 'W', 'M']
     win_sizes = [10, 20, 50, 100]
     filename = 'drought'
 
-    set_forecast(data_set2, target, target_index, agg_types, win_sizes, show_in_plots, filename)
+    variant = 'persistence'
 
+    # Set full set overview - Just for test purpose -
+    # set_forecast(data_set2, target, target_index, agg_types, win_sizes, show_in_plots, filename, 
+    #   variant=variant)
+    
+    # Sets with condition (winsize/agg)
+    agg_forecast(data_set2, target, target_index, agg_types, show_in_plots, filename, 
+      variant=variant)
+
+    best_agg = 'H'
+    smoothing_forecast(data_set2, target, target_index, best_agg, win_sizes, show_in_plots, filename, 
+      variant=variant)
+
+    best_win = 20
+    derivative = 2
+    diff_forecast(data_set2, target, target_index, best_agg, best_win, show_in_plots, filename, 
+        derivative=derivative, variant=variant)
 
 if __name__ == '__main__':
-    data_set2 = final_set_forecasting_drought()
+    data_set2 = final_set_forecasting_drought()[['QV2M']]
 
     set2_profiling(data_set2)
-    set2_transformation(data_set2)
+    # set2_transformation(data_set2)
     set2_forecast(data_set2)
    
 
