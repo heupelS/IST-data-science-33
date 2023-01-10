@@ -20,3 +20,10 @@ RUN conda install -y scikit-learn
 RUN conda install -y pandas
 RUN conda install -y statsmodels
 RUN conda install -y -c conda-forge imbalanced-learn
+
+RUN git clone https://github.com/nico-koltermann/IST-data-science-33.git
+
+WORKDIR /IST-data-science-33
+
+VOLUME . /plots
+
