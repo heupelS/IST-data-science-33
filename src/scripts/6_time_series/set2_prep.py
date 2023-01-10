@@ -40,7 +40,7 @@ def set2_profiling(data_set2):
             y_label='Consumption')
     
     box_plot(data_set2, 'date', 'drought')
-    var_distribution(data_set2, 'date', 'drought')
+    var_distribution(data_set2, 'date', 'QV2M', 'drought')
     data_stationary(data_set2, 'QV2M', 'drought')
 
 

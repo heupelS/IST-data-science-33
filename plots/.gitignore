@@ -10,3 +10,4 @@
 !FINAL/5_overfitting/*.png
 !FINAL/6_time_series/*.png
 !FINAL/6_time_series/**/*.png
+!FINAL/7_forecasting/**/*.png

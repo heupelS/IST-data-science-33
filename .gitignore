@@ -131,3 +131,5 @@ dmypy.json
 # Customs
 
 *~lock*
+
+*.model
