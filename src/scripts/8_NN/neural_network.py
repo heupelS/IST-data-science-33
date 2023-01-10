@@ -21,6 +21,9 @@ def neural_network(X, target, file_tag):
     y: ndarray = X.pop(target).values
     trnX, tstX, trnY, tstY = train_test_split(X, y, test_size=0.2, random_state=0)
 
+    labels = unique(trnY)
+    labels.sort()
+
     lr_type = ['constant', 'invscaling', 'adaptive']
     max_iter = [100, 300, 500, 750, 1000, 2500, 5000]
     learning_rate = [.1, .5, .9]
@@ -51,7 +54,7 @@ def neural_network(X, target, file_tag):
                     last_best = yvalues[-1]
                     best_model = mlp
             values[lr] = yvalues
-            
+
         multiple_line_chart(max_iter, values, ax=axs[0, k], title=f'MLP with lr_type={d}',
                             xlabel='mx iter', ylabel='accuracy', percentage=True)
 
