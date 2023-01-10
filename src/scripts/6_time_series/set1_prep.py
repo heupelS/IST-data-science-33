@@ -37,7 +37,7 @@ def set1_profiling(data_set1):
             y_label='Consumption')
 
     box_plot(data_set1, 'Date', 'glucose')
-    var_distribution(data_set1, 'Date', 'glucose')
+    var_distribution(data_set1, 'Date', 'Glucose', 'glucose')
     data_stationary(data_set1, 'Glucose', 'glucose')
 
 
