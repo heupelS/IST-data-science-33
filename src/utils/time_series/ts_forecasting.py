@@ -62,7 +62,7 @@ def plot_forecasting(train, test, prd_trn, prd_tst, target, index_target, name):
 def calculate_fc_with_plot(data, target, index_target, name, variant='simple_avg', measure='R2', flag_pct=False):
     
     train, test, prd_trn, prd_tst = forecast(data, target, index_target, f'{name}', 
-        variant=variant, measure=measure, flag_pct=flag_pct, win=i)
+        variant=variant, measure=measure, flag_pct=flag_pct)
 
     plot_forecasting(
         train, test, prd_trn, prd_tst, target, index_target, f'fc_{name}_{variant}')
