@@ -1,5 +1,9 @@
 
 name: data-science
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
 dependencies:
   - python=3.10
   - numpy
@@ -9,7 +13,7 @@ dependencies:
   - pip
   - pandas
   - seaborn
-  - imblearn
+  - imbalanced-learn
   - mlxtend
   - statsmodels
 
