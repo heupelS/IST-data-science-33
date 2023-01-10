@@ -72,7 +72,7 @@ def DT(df: DataFrame, target_name: str, save_file_name: str):
     plot_tree(df, save_file_name, labels, best_model)
     evaluate_DT(df, save_file_name, labels, best_model, X_train, X_test, y_train, y_test)
     feature_relevance(df, save_file_name, labels, best_model)
-    overfitting_study(df, save_file_name, X_train, X_test, y_train, y_test, max_depths)
+    overfitting_study_DT(df, save_file_name, X_train, X_test, y_train, y_test, max_depths)
 
     if SHOW_PLOTS:
         show()
@@ -81,13 +81,12 @@ def plot_tree(df: DataFrame, save_file_name: str, labels, best_model):
 
     labels = [str(value) for value in labels]
     tree.plot_tree(best_model, feature_names=df.columns, class_names=labels)
-    savefig(  os.path.join(get_plot_folder_path(), '%s_best_tree'%save_file_name) )
+    savefig(  os.path.join(get_plot_folder_path(), '%s_best_tree'%save_file_name), dpi=900 )
 
 def evaluate_DT(df: DataFrame, save_file_name: str, labels, best_model, X_train, X_test, y_train, y_test):
     
     prd_trn = best_model.predict(X_train)
     prd_tst = best_model.predict(X_test)
-    plot_evaluation_results(labels, y_train, prd_trn, y_test, prd_tst)
 
     label_count = len(labels)
 
@@ -117,7 +116,7 @@ def feature_relevance(df: DataFrame, save_file_name: str, labels, best_model):
     savefig(  os.path.join(get_plot_folder_path(), '%s_best_ranking' % save_file_name) )
 
 
-def overfitting_study(df: DataFrame, save_file_name: str, X_train, X_test, y_train, y_test, max_depths):
+def overfitting_study_DT(df: DataFrame, save_file_name: str, X_train, X_test, y_train, y_test, max_depths):
 
     imp = 0.0005
     f = 'entropy'
