@@ -38,7 +38,7 @@ def neural_network(X, target, file_tag):
             yvalues = []
             for n in max_iter:
                 
-                print(f'lr type {k} with lr {lr} and max Iter {max_iter}')
+                print(f'lr type {k} with lr {lr} and max Iter {n}')
 
                 mlp = MLPClassifier(activation='logistic', solver='sgd', learning_rate=d,
                                     learning_rate_init=lr, max_iter=n, verbose=False)
@@ -51,6 +51,7 @@ def neural_network(X, target, file_tag):
                     last_best = yvalues[-1]
                     best_model = mlp
             values[lr] = yvalues
+            
         multiple_line_chart(max_iter, values, ax=axs[0, k], title=f'MLP with lr_type={d}',
                             xlabel='mx iter', ylabel='accuracy', percentage=True)
 
