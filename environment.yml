@@ -1,0 +1,17 @@
+
+name: data-science
+dependencies:
+  - python=3.10
+  - numpy
+  - scikit-learn
+  - pytorch 
+  - matplotlib
+  - pip
+  - pandas
+  - seaborn
+  - imblearn
+  - mlxtend
+  - statsmodels
+
+
+    
