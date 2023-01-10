@@ -8,3 +8,5 @@
 !FINAL/3_KNN_NB_studies/**/*.png
 !FINAL/4_DT_RF_studies/**/*.png
 !FINAL/5_overfitting/*.png
+!FINAL/6_time_series/*.png
+!FINAL/6_time_series/**/*.png

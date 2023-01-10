@@ -1,9 +1,15 @@
 *.csv
 
-!diabetic_data.csv
 !drought.csv
 !drought_perperated.csv
 !drought_dataset_undersampled.csv
+
+!diabetic_data.csv
 !diabetic_data_perperated.csv
 !diabetic_dataset_oversampled.csv
+
 !!FINAL_DATA/*.csv
+
+!glucose.csv
+
+!drought.forecasting_dataset.csv
