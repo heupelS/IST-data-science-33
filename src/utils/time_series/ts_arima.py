@@ -2,6 +2,7 @@ import sys, os
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..') )
 sys.path.append( os.path.join(os.path.dirname(__file__)) )
+from general_utils import get_plot_folder_path
 
 from matplotlib.pyplot import subplots, show, savefig
 from ds_charts import multiple_line_chart
@@ -48,23 +49,36 @@ def find_arima_parameter(
         multiple_line_chart(
             params, values, ax=axs[0, der], title=f'ARIMA d={d}', xlabel='p', ylabel=measure, percentage=flag_pct)
 
-    savefig(f'{file_tag}_ts_arima_study.png')
+    savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_ts_arima_study' ) )
 
     print(f'Best results achieved with (p,d,q)=({best[0]}, {best[1]}, {best[2]}) ==> measure={last_best:.2f}')
     
-    return (best[0],best[1],best[2])
+    return (best[0],best[1],best[2]), best_model
+
+def arima_plot_diagnostics(train, order):
+    pred = ARIMA(train, order=order)
+    model = pred.fit()
+    model.plot_diagnostics(figsize=(2*HEIGHT, 2*HEIGHT))
+
 
 def arima_forecast(
     train: DataFrame, 
+    test: DataFrame,
     index: str,
     target: str,
     freq:str,
-    order: tuple,
+    model,
     file_tag: str):
 
-    pred = ARIMA(train, order=order)
-    model = pred.fit(method_kwargs={'warn_convergence': False})
-    model.plot_diagnostics(figsize=(2*HEIGHT, 2*HEIGHT))
+    measure = 'R2'
 
-    show()
+    prd_trn = model.predict(start=0, end=len(train)-1)
+    prd_tst = model.forecast(steps=len(test))
+    print(f'\t{measure}={PREDICTION_MEASURES[measure](test, prd_tst)}')
+
+    plot_evaluation_results(train.values, prd_trn, test.values, prd_tst, f'{file_tag}_arima_eval.png')
+    savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_arima_eval' ) )
+
+    plot_forecasting_series(train, test, prd_trn, prd_tst, f'{file_tag}_arima_plots.png', x_label= str(index), y_label=str(target))
+    savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_arima_plot' ) )
 

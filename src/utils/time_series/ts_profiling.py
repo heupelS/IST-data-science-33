@@ -35,12 +35,12 @@ def box_plot(data, target_index, name):
     savefig(  os.path.join(get_plot_folder_path(), '%s_%s_boxplot' % (name, target_index) ) )
 
 
-def var_distribution(data, target_index, name):
+def var_distribution(data, target_index, target, name):
     bins = (10, 25, 50)
     _, axs = subplots(1, len(bins), figsize=(len(bins)*HEIGHT, HEIGHT))
     for j in range(len(bins)):
-        axs[j].set_title('Histogram for hourly meter_reading %d bins'%bins[j])
-        axs[j].set_xlabel('consumption')
+        axs[j].set_title(f'Histogram for hourly {target} {bins[j]} bins')
+        axs[j].set_xlabel(target)
         axs[j].set_ylabel('Nr records')
         axs[j].hist(data.values, bins=bins[j])
     savefig(  os.path.join(get_plot_folder_path(), '%s_%s_var_distribution' % (name, target_index) ) )
@@ -55,5 +55,21 @@ def data_stationary(data, target_var, name):
     plot_series(series, x_label='timestamp', y_label='consumption', title='Stationary study', show_std=True)
 
     savefig(  os.path.join(get_plot_folder_path(), '%s_target_%s_stationary_study' % (name, target_var) ) )
+
+
+def data_stationary(data, target_var, name):
+    BINS = 10
+    line = []
+    n = len(data)
+    for i in range(BINS):
+        b = dt_series[i*n//BINS:(i+1)*n//BINS]
+        mean = [b.mean()] * (n//BINS)
+        line += mean
+    line += [line[-1]] * (n - len(line))
+    mean_line = Series(line, index=data.index)
+    series = {'ashrae': data, 'mean': mean_line}
+    figure(figsize=(3*HEIGHT, HEIGHT))
+    plot_series(series, x_label='time', y_label='consumptions', title='Stationary study', show_std=True)
+
 
 

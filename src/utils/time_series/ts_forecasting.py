@@ -25,14 +25,14 @@ def split_dataframe(data, trn_pct=0.70):
 
 
 # Select regressor from [simple_avg, persistence, rolling_mean]
-def forecast(data, target, index_target, name, variant='simple_avg', measure='R2', flag_pct=False):
+def forecast(data, target, index_target, name, variant='simple_avg', measure='R2', flag_pct=False, win=3):
 
     train, test = split_dataframe(data, trn_pct=0.75)
 
     if variant == 'simple_avg':
         fr_mod = SimpleAvgRegressor()
     elif variant == 'rolling_mean':
-        fr_mod = RollingMeanRegressor()
+        fr_mod = RollingMeanRegressor(win)
     elif variant == 'persistence':
         fr_mod = PersistenceRegressor()
     else: 
@@ -60,9 +60,10 @@ def plot_forecasting(train, test, prd_trn, prd_tst, target, index_target, name):
 
 
 def calculate_fc_with_plot(data, target, index_target, name, variant='simple_avg', measure='R2', flag_pct=False):
-    train, test, prd_trn, prd_tst = forecast(data, target, index_target, name, 
-        variant=variant, measure=measure, flag_pct=flag_pct)
+    
+    train, test, prd_trn, prd_tst = forecast(data, target, index_target, f'{name}_win_{i}', 
+        variant=variant, measure=measure, flag_pct=flag_pct, win=i)
 
     plot_forecasting(
-        train, test, prd_trn, prd_tst, target, index_target, f'fc_{name}_{variant}')
+        train, test, prd_trn, prd_tst, target, index_target, f'fc_{name}_{variant}_win{i}')
 
