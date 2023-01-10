@@ -60,3 +60,9 @@ conda env create --file environment.yml
 ```
 
 __Important: This work directory is mounted into the container! If you run and save plots, they get directly saved here and could overwrite old results!__
+
+## Copy remote files
+
+```bash 
+scp username@b:/path/to/file /path/to/destination
+```
