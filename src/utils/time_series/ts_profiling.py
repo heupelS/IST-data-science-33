@@ -57,19 +57,25 @@ def data_stationary(data, target_var, name):
     savefig(  os.path.join(get_plot_folder_path(), '%s_target_%s_stationary_study' % (name, target_var) ) )
 
 
-def data_stationary(data, target_var, name):
+def data_stationary_2(data, target_var, name):
     BINS = 10
     line = []
     n = len(data)
+
+    dt_series = Series(data[target_var])
+
     for i in range(BINS):
         b = dt_series[i*n//BINS:(i+1)*n//BINS]
         mean = [b.mean()] * (n//BINS)
         line += mean
     line += [line[-1]] * (n - len(line))
-    mean_line = Series(line, index=data.index)
-    series = {'ashrae': data, 'mean': mean_line}
+    mean_line = Series(line, index=dt_series.index)
+    series = {'ashrae': dt_series, 'mean': mean_line}
     figure(figsize=(3*HEIGHT, HEIGHT))
+
     plot_series(series, x_label='time', y_label='consumptions', title='Stationary study', show_std=True)
+    savefig(  os.path.join(get_plot_folder_path(), '%s_target_%s_stationary_study_2' % (name, target_var) ) )
+
 
 
 
