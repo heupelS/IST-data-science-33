@@ -5,6 +5,7 @@ from pandas import DataFrame, read_csv, unique
 
 sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 
+import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure, subplots, savefig, show
 from sklearn.neural_network import MLPClassifier
 from ds_charts import plot_evaluation_results, multiple_line_chart, horizontal_bar_chart, HEIGHT
@@ -24,9 +25,12 @@ def neural_network(X, target, file_tag):
     labels = unique(trnY)
     labels.sort()
 
-    lr_type = ['constant', 'invscaling', 'adaptive']
-    max_iter = [100, 300, 500, 750, 1000, 2500, 5000]
-    learning_rate = [.1, .5, .9]
+    lr_type = ['constant']
+    # lr_type = ['constant', 'invscaling', 'adaptive']
+    max_iter = [100]
+    # max_iter = [100, 300, 500, 750, 1000, 2500, 5000]
+    learning_rate = [.1]
+    # learning_rate = [.1, .5, .9]
     best = ('', 0, 0)
     last_best = 0
     best_model = None
@@ -57,14 +61,22 @@ def neural_network(X, target, file_tag):
 
         multiple_line_chart(max_iter, values, ax=axs[0, k], title=f'MLP with lr_type={d}',
                             xlabel='mx iter', ylabel='accuracy', percentage=True)
-
+    
     savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_mlp_study' ) )
+
+    plt.plot(best_model.loss_curve_)
+    savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_mlp_loss' ) )
+
 
     print(f'Best results with lr_type={best[0]}, learning rate={best[1]} and {best[2]} max iter, with accuracy={last_best}')
 
     prd_trn = best_model.predict(trnX)
     prd_tst = best_model.predict(tstX)
-    plot_evaluation_results(labels, trnY, prd_trn, tstY, prd_tst)
+
+    if len(labels) > 2:
+        plot_evaluation_results_multi_label(labels, trnY, prd_trn, tstY, prd_tst)
+    else:
+        plot_evaluation_results(labels, trnY, prd_trn, tstY, prd_tst)
 
     savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_mlp_best' ) )
 
