@@ -28,11 +28,8 @@ def gb(X, target, file_tag):
     labels = unique(trnY)
     labels.sort()
 
-    n_estimators = [5, 10]
-    # n_estimators = [5, 10, 25, 50, 75, 100, 200, 300, 400]
-    max_depths = [5, 10]
-    # max_depths = [5, 10, 25]
-    # learning_rate = [.1, .5, .9]
+    n_estimators = [5, 10, 25, 50, 75, 100, 200, 300, 400]
+    max_depths = [5, 10, 25]
     learning_rate = [.1, .5, .9]
     best = ('', 0, 0)
     last_best = 0
