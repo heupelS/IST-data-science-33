@@ -107,17 +107,17 @@ def simple_avg(data_set, target_var, target_index):
 
 
 if __name__ == '__main__':
-    data_set1 = final_set_forecasting_glucose()[['Glucose']]
-    data_set2 = final_set_forecasting_drought()[['QV2M']]
+    data_set1 = final_set_forecasting_glucose()
+    data_set2 = final_set_forecasting_drought()
 
-    rollong_mean(data_set1, 'Glucose', 'Date')
-    rollong_mean(data_set2, 'QV2M', 'date')
+    # rollong_mean(data_set1, 'Glucose', 'Date')
+    # rollong_mean(data_set2, 'QV2M', 'date')
 
-    simple_avg(data_set1, 'Glucose', 'Date')
-    simple_avg(data_set2, 'QV2M', 'date')
+    # simple_avg(data_set1, 'Glucose', 'Date')
+    # simple_avg(data_set2, 'QV2M', 'date')
 
-    final_arima_forecast(data_set1, 'Date', 'glucose', 'H', 'glucose', exe_training=True)
-    final_arima_forecast(data_set2, 'date', 'QV2M', 'H', 'drought', exe_training=True)
+    # final_arima_forecast(data_set1, 'Date', 'glucose', 'H', 'glucose', exe_training=True)
+    # final_arima_forecast(data_set2, 'date', 'QV2M', 'H', 'drought', exe_training=True)
     
     final_lstm_forecast(data_set1, 'Date', 'glucose', 'H', 'glucose', exe_training=True)
     final_lstm_forecast(data_set2, 'date', 'QV2M', 'H', 'drought', exe_training=True)
