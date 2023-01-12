@@ -17,6 +17,9 @@ from general_utils import get_plot_folder_path
 
 from sklearn.model_selection import train_test_split
 
+import numpy as np
+
+
 def neural_network(X, target, file_tag):
 
     y: ndarray = X.pop(target).values
@@ -25,17 +28,19 @@ def neural_network(X, target, file_tag):
     labels = unique(trnY)
     labels.sort()
 
-    lr_type = ['constant']
-    # lr_type = ['constant', 'invscaling', 'adaptive']
+    lr_type = ['constant', 'invscaling', 'adaptive']
     max_iter = [100]
     # max_iter = [100, 300, 500, 750, 1000, 2500, 5000]
-    learning_rate = [.1]
+    learning_rate = [.1, .5, .9]
     # learning_rate = [.1, .5, .9]
     best = ('', 0, 0)
     last_best = 0
     best_model = None
 
     cols = len(lr_type)
+
+    losses = []
+
     figure()
     fig, axs = subplots(1, cols, figsize=(cols*HEIGHT, HEIGHT), squeeze=False)
     for k in range(len(lr_type)):
@@ -53,6 +58,9 @@ def neural_network(X, target, file_tag):
                 mlp.fit(trnX, trnY)
                 prdY = mlp.predict(tstX)
                 yvalues.append(accuracy_score(tstY, prdY))
+
+                losses.append( ((d, lr, n), mlp.loss_curve_) )
+
                 if yvalues[-1] > last_best:
                     best = (d, lr, n)
                     last_best = yvalues[-1]
@@ -64,11 +72,17 @@ def neural_network(X, target, file_tag):
     
     savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_mlp_study' ) )
 
-    plt.plot(best_model.loss_curve_)
-    savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_mlp_loss' ) )
+
+    for res in losses:
+        plt.figure()
+        x = np.arange(len(res[1]))
+        plt.plot(x, res[1])
+        savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_type{res[0][0]}_lr{res[0][1]}_iter{res[0][2]}_mlp_loss.png' ) )
 
 
     print(f'Best results with lr_type={best[0]}, learning rate={best[1]} and {best[2]} max iter, with accuracy={last_best}')
+
+    exit(-1)
 
     prd_trn = best_model.predict(trnX)
     prd_tst = best_model.predict(tstX)
@@ -102,7 +116,7 @@ def main():
     drought_data = read_data_by_filename('drought_dataset_undersampled.csv')
     diabetic_data = read_data_by_filename('diabetic_dataset_oversampled.csv')
 
-    neural_network(drought_data, 'drought', 'drought')
+    # neural_network(drought_data, 'drought', 'drought')
     neural_network(diabetic_data, 'readmitted', 'diabetic')
 
 if __name__ == '__main__':

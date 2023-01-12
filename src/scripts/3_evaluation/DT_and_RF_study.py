@@ -9,30 +9,16 @@ from load_data import read_data_by_filename, save_new_csv
 from evaluation.Decision_tree_natan import DT
 from evaluation.Random_forest_natan import RF
 
-###########################################
-## Select if plots show up of just saved ##
-FILENAME = 'drought_dataset_undersampled.csv'
-main_name =FILENAME.split("_")[0]
-filename = FILENAME.split(".")[0]
-###########################################
-
-
 def evaluating_dataset(data,target):
 
-    DT(data.copy(), target, '%s_DT'% filename)
-    RF(data.copy(), target, '%s_RF'% filename)
+    DT(data.copy(), target, '%s_DT'% target)
+    RF(data.copy(), target, '%s_RF'% target)
 
 
 if __name__ == "__main__":
-    data = read_data_by_filename(FILENAME)
-
-    if main_name == 'drought':
-        target = 'drought'
-    elif main_name == 'diabetic':
-        target = 'readmitted'
-    else:
-        print("Your dataset doesnt match with diabetic or drought..Try again with onde of them!")
-        exit(0)
+    data1 = read_data_by_filename('diabetic_dataset_oversampled.csv')
+    data2 = read_data_by_filename('drought_dataset_undersampled.csv')
 
     # Evaluating dataset
-    evaluating_dataset(data,target)
+    evaluating_dataset(data1, 'readmitted')
+    evaluating_dataset(data2, 'drought')
