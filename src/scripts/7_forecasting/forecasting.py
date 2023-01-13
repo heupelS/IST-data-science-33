@@ -77,7 +77,7 @@ def final_lstm_forecast(
     length=20
     learning_rate = 0.001
     hidden_units = 32 
-    
+
     if exe_training:
         lenght, model = lstm_train(train, test, index, target, nr_features, file_tag)
         savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_lstm_params' ) )
@@ -119,10 +119,15 @@ if __name__ == '__main__':
     # final_arima_forecast(data_set1, 'Date', 'glucose', 'H', 'glucose', exe_training=True)
     # final_arima_forecast(data_set2, 'date', 'QV2M', 'H', 'drought', exe_training=True)
     
-    final_lstm_forecast(data_set1, 'Date', 'glucose', 'H', 'glucose', exe_training=True)
-    final_lstm_forecast(data_set2, 'date', 'QV2M', 'H', 'drought', exe_training=True)
+    for column in data_set1:
+        final_lstm_forecast(data_set1, 'Date', 'glucose', 'H', 'glucose', exe_training=True)
+
+    # for column in data_set2:
+    #     final_lstm_forecast(data_set2, 'date', 'QV2M', 'H', 'drought', exe_training=True)
+
 
     
+
 
     
 
