@@ -123,7 +123,7 @@ if __name__ == '__main__':
     #     final_lstm_forecast(data_set1, 'Date', 'glucose', 'H', f'glucose_{column}', exe_training=True)
 
     for column in data_set2:
-        final_lstm_forecast(data_set2, 'date', 'QV2M', 'H', f'drought:{column}', exe_training=True)
+        final_lstm_forecast(data_set2[[column]], 'date', 'QV2M', 'H', f'drought:{column}', exe_training=True)
 
 
     
