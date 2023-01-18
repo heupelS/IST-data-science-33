@@ -70,10 +70,10 @@ def data_stationary_2(data, target_var, name):
         line += mean
     line += [line[-1]] * (n - len(line))
     mean_line = Series(line, index=dt_series.index)
-    series = {'ashrae': dt_series, 'mean': mean_line}
+    series = {target_var: dt_series, 'mean': mean_line}
     figure(figsize=(3*HEIGHT, HEIGHT))
 
-    plot_series(series, x_label='time', y_label='consumptions', title='Stationary study', show_std=True)
+    plot_series(series, x_label='time', y_label=target_var, title='Stationary study', show_std=True)
     savefig(  os.path.join(get_plot_folder_path(), '%s_target_%s_stationary_study_2' % (name, target_var) ) )
 
 

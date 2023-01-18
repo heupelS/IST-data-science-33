@@ -4,7 +4,7 @@ sys.path.append( os.path.join(os.path.dirname(__file__), '..', '..','utils') )
 from load_data import read_time_series_by_filename, save_new_csv
 from general_utils import get_plot_folder_path
 
-from time_series.ts_forecasting import split_dataframe, calculate_fc_with_plot
+from time_series.ts_forecasting import split_dataframe, calculate_fc_with_plot, compare
 from time_series.ts_arima import arima_forecast, find_arima_parameter, arima_plot_diagnostics
 from time_series.ts_lstm import lstm_train, lstm_forecast, lstm_plot_diagnostics
 
@@ -55,6 +55,8 @@ def final_arima_forecast(
         # model = ARIMA(train, order=order)
         # model.load_state_dict(load_model(f'./model_{file_tag}_arima.model'))
     
+    print(f'best order: {order}')
+
     arima_plot_diagnostics(train, order)
     savefig( os.path.join(get_plot_folder_path(), f'{file_tag}_arima_diagnostic' ) )
 
@@ -110,22 +112,26 @@ if __name__ == '__main__':
     data_set1 = final_set_forecasting_glucose()
     data_set2 = final_set_forecasting_drought()
 
-    # rollong_mean(data_set1, 'Glucose', 'Date')
-    # rollong_mean(data_set2, 'QV2M', 'date')
+    rollong_mean(data_set1, 'Glucose', 'Date')
+    rollong_mean(data_set2, 'QV2M', 'date')
 
-    # simple_avg(data_set1, 'Glucose', 'Date')
-    # simple_avg(data_set2, 'QV2M', 'date')
+    compare(data_set1.copy()[['Glucose']], 
+        'Glucose', 'Date', f'glucose_fc_comparison')
 
-    # final_arima_forecast(data_set1, 'Date', 'glucose', 'H', 'glucose', exe_training=True)
-    # final_arima_forecast(data_set2, 'date', 'QV2M', 'H', 'drought', exe_training=True)
-    
-    for column in data_set1:
-        final_lstm_forecast(data_set1[[column]], 'Date', 'glucose', 'H', f'glucose_{column}', exe_training=True)
+    compare(data_set2.copy()[['QV2M']], 
+        'QV2M', 'date', f'drought_fc_comparison')
 
-    # for column in data_set2:
-    #     final_lstm_forecast(data_set2[[column]], 'date', 'QV2M', 'H', f'drought:{column}', exe_training=True)
+    test_regressor(data_set1.copy()[['Glucose']], 
+        'Glucose', 'Date', f'glucose_fc_comparison')
 
+    test_regressor(data_set2.copy()[['QV2M']], 
+        'QV2M', 'date', f'drought_fc_comparison')
 
+    simple_avg(data_set1[['Glucose']], 'Glucose', 'Date')
+    simple_avg(data_set2[['QV2M']], 'QV2M', 'date')
+
+    final_arima_forecast(data_set1[['Glucose']], 'Date', 'Glucose', 'H', 'glucose', exe_training=True)
+    final_arima_forecast(data_set2[['QV2M']], 'date', 'QV2M', 'H', 'drought', exe_training=True)
     
 
 

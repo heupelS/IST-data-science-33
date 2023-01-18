@@ -15,6 +15,8 @@ from ts_functions import PREDICTION_MEASURES, plot_evaluation_results, plot_fore
 from regressor import SimpleAvgRegressor, PersistenceRegressor, RollingMeanRegressor
 
 from statsmodels.tsa.arima.model import ARIMA
+from ds_charts import bar_chart
+
 
 def split_dataframe(data, trn_pct=0.70):
     trn_size = int(len(data) * trn_pct)
@@ -22,6 +24,26 @@ def split_dataframe(data, trn_pct=0.70):
     train: DataFrame = df_cp.iloc[:trn_size, :]
     test: DataFrame = df_cp.iloc[trn_size:]
     return train, test
+
+
+def compare(data, target, index_target, name):
+
+    measure = 'R2'
+    flag_pct=False
+
+    eval_results = {}
+    regs = ['simple_avg', 'rolling_mean', 'persistence']
+
+    for r in regs:
+        train, test, prd_trn, prd_tst = forecast(data, target, index_target, f'{name}', 
+            variant=r)
+
+        eval_results[r] = PREDICTION_MEASURES[measure](test.values, prd_tst)
+
+    figure()
+    bar_chart(list(eval_results.keys()), list(eval_results.values()), title = 'Basic Regressors Comparison', xlabel= 'Regressor', ylabel=measure, percentage=flag_pct, rotation = False)
+    
+    savefig( os.path.join(get_plot_folder_path(), f'{name}_basic_reg' ) )
 
 
 # Select regressor from [simple_avg, persistence, rolling_mean]
