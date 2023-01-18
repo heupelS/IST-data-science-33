@@ -31,7 +31,7 @@ def NB(df: DataFrame, target_name: str, save_file_name: str):
     y: ndarray = df.pop(target_name).values
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=0)
     
-    for clf in [GaussianNB(),BernoulliNB()]:
+    for clf in [GaussianNB(),BernoulliNB(), MultinomialNB()]:
         clf.fit(X_train, y_train)
 
         prd_trn = clf.predict(X_train)
@@ -48,23 +48,24 @@ def NB(df: DataFrame, target_name: str, save_file_name: str):
 
         savefig(  os.path.join(get_plot_folder_path(), f'{save_file_name}_result_{str(clf)[:-2]}') )
 
-        #nb_model_comparison(X_train, y_train, X_test, y_test)
-        #savefig(  os.path.join(get_plot_folder_path(), '%s_comparison' % save_file_name) )
+    nb_model_comparison(X_train, y_train, X_test, y_test)
+    savefig(  os.path.join(get_plot_folder_path(), '%s_comparison' % save_file_name) )
 
-        if SHOW_PLOTS:
-            show()
+    if SHOW_PLOTS:
+        show()
 
     
 def nb_model_comparison(X_train, y_train, X_test, y_test):
 
     estimators = {'GaussianNB': GaussianNB(),
-                # 'MultinomialNB': MultinomialNB(),
+                'MultinomialNB': MultinomialNB(),
                 'BernoulliNB': BernoulliNB()
-                #'CategoricalNB': CategoricalNB
+                # 'CategoricalNB': CategoricalNB
                 }
 
     xvalues = []
     yvalues = []
+    i = 0
     for clf in estimators:
         xvalues.append(clf)
         estimators[clf].fit(X_train, y_train)
@@ -72,7 +73,6 @@ def nb_model_comparison(X_train, y_train, X_test, y_test):
         yvalues.append(accuracy_score(y_test, prdY))
 
     figure()
-    for i in range(len(estimators)):
-        multiple_bar_chart(xvalues, yvalues, title='Comparison of Naive Bayes Models', ylabel='accuracy', percentage=True)
+    bar_chart(xvalues, yvalues, title='Comparison of Naive Bayes Models', ylabel='accuracy', percentage=True)
 
 
