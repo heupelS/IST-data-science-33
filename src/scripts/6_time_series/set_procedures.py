@@ -65,6 +65,19 @@ def set_forecast(
     calculate_fc_with_plot(df_diff.copy()[show_in_plots], target_var, target_index, 
         f'{name}_diff', variant=variant)
 
+def test_regressor(
+    data_set: DataFrame, 
+    target_var: str, 
+    target_index: str,
+    name: str, 
+    show_in_plots,
+    variant='persistance'):
+
+     # Test all regressor
+    calculate_fc_with_plot(data_set.copy()[show_in_plots], 
+        target_var, target_index, f'{name}_without_tf', variant)
+
+
 def agg_forecast(
     data_set: DataFrame, 
     target_var: str, 
@@ -96,8 +109,9 @@ def smoothing_forecast(
     variant: str='persistance',
     test_regressor: bool=False):
 
-    df_agg = aggregate_multi(data_set.copy(), target_index, agg_type)
-    df_agg = df_agg.dropna(axis=0)
+    # df_agg = aggregate_multi(data_set.copy(), target_index, agg_type)
+    # df_agg = df_agg.dropna(axis=0)
+    df_agg = data_set
 
     # Test all window sizes
     for ws in win_sizes:
@@ -121,13 +135,15 @@ def diff_forecast(
     variant: str='persistence',
     test_regressor: bool=False):
 
-    # aggregate
-    df_agg = aggregate_multi(data_set.copy(), target_index, agg_type)
-    df_agg = df_agg.dropna(axis=0)
+    # # aggregate
+    # df_agg = aggregate_multi(data_set.copy(), target_index, agg_type)
+    # df_agg = df_agg.dropna(axis=0)
 
-    # smooth
-    df_sm = smoothing(df_agg, win_size)
-    df_sm = df_sm.dropna(axis=0)
+    # # smooth
+    # df_sm = smoothing(df_agg, win_size)
+    # df_sm = df_sm.dropna(axis=0)
+
+    df_sm = data_set
 
     df_diff = df_sm.copy()
     for d in range(derivative):
